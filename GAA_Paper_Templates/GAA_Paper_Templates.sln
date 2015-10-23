@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GAA_Paper_Templates", "GAA_Paper_Templates\GAA_Paper_Templates.csproj", "{CAEF614A-C2B3-4AE3-9BE2-E7DA81E28921}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL_Layer", "GAA_Paper_Templates\DAL_Layer.csproj", "{CAEF614A-C2B3-4AE3-9BE2-E7DA81E28921}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Service_Layer", "BusinessLogicLayer\Service_Layer.csproj", "{47EB245C-FDA3-4096-ABC4-B78DA7FB5865}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{CAEF614A-C2B3-4AE3-9BE2-E7DA81E28921}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CAEF614A-C2B3-4AE3-9BE2-E7DA81E28921}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CAEF614A-C2B3-4AE3-9BE2-E7DA81E28921}.Release|Any CPU.Build.0 = Release|Any CPU
+		{47EB245C-FDA3-4096-ABC4-B78DA7FB5865}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47EB245C-FDA3-4096-ABC4-B78DA7FB5865}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47EB245C-FDA3-4096-ABC4-B78DA7FB5865}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47EB245C-FDA3-4096-ABC4-B78DA7FB5865}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
