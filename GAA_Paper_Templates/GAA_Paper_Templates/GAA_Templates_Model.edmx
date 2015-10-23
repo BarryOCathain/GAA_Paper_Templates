@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl" Namespace="GAA_Templates_Model.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2005">
+        <EntityContainer Name="GAA_Templates_ModelTargetContainer" >
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="GAA_Templates_Model" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="GAA_Templates_ModelContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Matches" EntityType="GAA_Templates_Model.Match" />
+          <EntitySet Name="Teams" EntityType="GAA_Templates_Model.Team" />
+          <EntitySet Name="Counties" EntityType="GAA_Templates_Model.County" />
+          <AssociationSet Name="CountyCountyTeam" Association="GAA_Templates_Model.CountyCountyTeam">
+            <End Role="County" EntitySet="Counties" />
+            <End Role="CountyTeam" EntitySet="Teams" />
+          </AssociationSet>
+          <AssociationSet Name="ClubTeamCounty" Association="GAA_Templates_Model.ClubTeamCounty">
+            <End Role="ClubTeam" EntitySet="Teams" />
+            <End Role="County" EntitySet="Counties" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Match">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MatchDate" Type="String" Nullable="false" />
+          <Property Name="IsObsolete" Type="String" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Team">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" />
+        </EntityType>
+        <EntityType Name="County">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <NavigationProperty Name="CountyTeams" Relationship="GAA_Templates_Model.CountyCountyTeam" FromRole="County" ToRole="CountyTeam" />
+          <NavigationProperty Name="ClubTeams" Relationship="GAA_Templates_Model.ClubTeamCounty" FromRole="County" ToRole="ClubTeam" />
+        </EntityType>
+        <EntityType Name="CountyTeam" BaseType="GAA_Templates_Model.Team">
+          <NavigationProperty Name="County" Relationship="GAA_Templates_Model.CountyCountyTeam" FromRole="CountyTeam" ToRole="County" />
+        </EntityType>
+        <EntityType Name="ClubTeam" BaseType="GAA_Templates_Model.Team">
+          <NavigationProperty Name="County" Relationship="GAA_Templates_Model.ClubTeamCounty" FromRole="ClubTeam" ToRole="County" />
+        </EntityType>
+        <Association Name="CountyCountyTeam">
+          <End Type="GAA_Templates_Model.County" Role="County" Multiplicity="1" />
+          <End Type="GAA_Templates_Model.CountyTeam" Role="CountyTeam" Multiplicity="1" />
+        </Association>
+        <Association Name="ClubTeamCounty">
+          <End Type="GAA_Templates_Model.ClubTeam" Role="ClubTeam" Multiplicity="*" />
+          <End Type="GAA_Templates_Model.County" Role="County" Multiplicity="1" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs" Space="C-S">
+        <Alias Key="Model" Value="GAA_Templates_Model" />
+        <Alias Key="Target" Value="GAA_Templates_Model.Store" />
+        <EntityContainerMapping CdmEntityContainer="GAA_Templates_ModelContainer" StorageEntityContainer="GAA_Templates_ModelTargetContainer">
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
