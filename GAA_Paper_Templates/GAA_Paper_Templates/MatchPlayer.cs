@@ -15,14 +15,14 @@ namespace GAA_Paper_Templates
     public partial class MatchPlayer
     {
         public int ID { get; set; }
-        public string Goals { get; set; }
-        public string Penalties { get; set; }
-        public string Points { get; set; }
-        public string Frees { get; set; }
-        public string IsSubbed { get; set; }
-        public string MinuteOn { get; set; }
-        public string MinuteOff { get; set; }
-        public string PlayerNumber { get; set; }
+        public int Goals { get; set; }
+        public int Penalties { get; set; }
+        public int Points { get; set; }
+        public int Frees { get; set; }
+        public bool IsSubbed { get; set; }
+        public int MinuteOn { get; set; }
+        public int MinuteOff { get; set; }
+        public int PlayerNumber { get; set; }
     
         public virtual Match Match { get; set; }
         public virtual Team Teams { get; set; }

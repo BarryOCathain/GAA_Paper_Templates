@@ -31,5 +31,7 @@ namespace GAA_Paper_Templates
         public virtual DbSet<Player> Players { get; set; }
         public virtual DbSet<Venue> Venues { get; set; }
         public virtual DbSet<MatchPlayer> MatchPlayers { get; set; }
+        public virtual DbSet<Competition> Competitions { get; set; }
+        public virtual DbSet<CompetitionMatchType> CompetitionMatchTypes { get; set; }
     }
 }

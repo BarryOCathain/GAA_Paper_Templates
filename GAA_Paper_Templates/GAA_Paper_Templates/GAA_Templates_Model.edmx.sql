@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 10/23/2015 22:30:30
+-- Date Created: 10/23/2015 23:10:08
 -- Generated from EDMX file: C:\TortoiseGit\GAA_Paper_Templates\GAA_Paper_Templates\GAA_Paper_Templates\GAA_Templates_Model.edmx
 -- --------------------------------------------------
 
@@ -17,11 +17,95 @@ GO
 -- Dropping existing FOREIGN KEY constraints
 -- --------------------------------------------------
 
+IF OBJECT_ID(N'[dbo].[FK_CountyCountyTeam]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Counties] DROP CONSTRAINT [FK_CountyCountyTeam];
+GO
+IF OBJECT_ID(N'[dbo].[FK_ClubTeamCounty]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Teams_ClubTeam] DROP CONSTRAINT [FK_ClubTeamCounty];
+GO
+IF OBJECT_ID(N'[dbo].[FK_CountyTeamPlayer]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Players] DROP CONSTRAINT [FK_CountyTeamPlayer];
+GO
+IF OBJECT_ID(N'[dbo].[FK_ClubTeamPlayer]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Players] DROP CONSTRAINT [FK_ClubTeamPlayer];
+GO
+IF OBJECT_ID(N'[dbo].[FK_CountyVenue]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Venues] DROP CONSTRAINT [FK_CountyVenue];
+GO
+IF OBJECT_ID(N'[dbo].[FK_VenueMatch]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Matches] DROP CONSTRAINT [FK_VenueMatch];
+GO
+IF OBJECT_ID(N'[dbo].[FK_MatchMatchPlayer]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[MatchPlayers] DROP CONSTRAINT [FK_MatchMatchPlayer];
+GO
+IF OBJECT_ID(N'[dbo].[FK_MatchPlayerTeam]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[MatchPlayers] DROP CONSTRAINT [FK_MatchPlayerTeam];
+GO
+IF OBJECT_ID(N'[dbo].[FK_PlayerMatchPlayer]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[MatchPlayers] DROP CONSTRAINT [FK_PlayerMatchPlayer];
+GO
+IF OBJECT_ID(N'[dbo].[FK_MatchCompetitionMatchType]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Matches] DROP CONSTRAINT [FK_MatchCompetitionMatchType];
+GO
+IF OBJECT_ID(N'[dbo].[FK_CompetitionMatchTypeCompetition_CompetitionMatchType]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[CompetitionMatchTypeCompetition] DROP CONSTRAINT [FK_CompetitionMatchTypeCompetition_CompetitionMatchType];
+GO
+IF OBJECT_ID(N'[dbo].[FK_CompetitionMatchTypeCompetition_Competition]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[CompetitionMatchTypeCompetition] DROP CONSTRAINT [FK_CompetitionMatchTypeCompetition_Competition];
+GO
+IF OBJECT_ID(N'[dbo].[FK_MatchCompetition]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Matches] DROP CONSTRAINT [FK_MatchCompetition];
+GO
+IF OBJECT_ID(N'[dbo].[FK_TeamMatch]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Matches] DROP CONSTRAINT [FK_TeamMatch];
+GO
+IF OBJECT_ID(N'[dbo].[FK_TeamMatch1]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Matches] DROP CONSTRAINT [FK_TeamMatch1];
+GO
+IF OBJECT_ID(N'[dbo].[FK_CountyTeam_inherits_Team]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Teams_CountyTeam] DROP CONSTRAINT [FK_CountyTeam_inherits_Team];
+GO
+IF OBJECT_ID(N'[dbo].[FK_ClubTeam_inherits_Team]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Teams_ClubTeam] DROP CONSTRAINT [FK_ClubTeam_inherits_Team];
+GO
 
 -- --------------------------------------------------
 -- Dropping existing tables
 -- --------------------------------------------------
 
+IF OBJECT_ID(N'[dbo].[Matches]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Matches];
+GO
+IF OBJECT_ID(N'[dbo].[Teams]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Teams];
+GO
+IF OBJECT_ID(N'[dbo].[Counties]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Counties];
+GO
+IF OBJECT_ID(N'[dbo].[Players]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Players];
+GO
+IF OBJECT_ID(N'[dbo].[Venues]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Venues];
+GO
+IF OBJECT_ID(N'[dbo].[MatchPlayers]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[MatchPlayers];
+GO
+IF OBJECT_ID(N'[dbo].[Competitions]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Competitions];
+GO
+IF OBJECT_ID(N'[dbo].[CompetitionMatchTypes]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[CompetitionMatchTypes];
+GO
+IF OBJECT_ID(N'[dbo].[Teams_CountyTeam]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Teams_CountyTeam];
+GO
+IF OBJECT_ID(N'[dbo].[Teams_ClubTeam]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Teams_ClubTeam];
+GO
+IF OBJECT_ID(N'[dbo].[CompetitionMatchTypeCompetition]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[CompetitionMatchTypeCompetition];
+GO
 
 -- --------------------------------------------------
 -- Creating all tables
@@ -30,10 +114,14 @@ GO
 -- Creating table 'Matches'
 CREATE TABLE [dbo].[Matches] (
     [ID] int IDENTITY(1,1) NOT NULL,
-    [MatchDate] nvarchar(max)  NOT NULL,
-    [IsObsolete] nvarchar(max)  NOT NULL,
-    [MatchTime] nvarchar(max)  NOT NULL,
-    [Venue_ID] int  NOT NULL
+    [MatchDate] datetime  NOT NULL,
+    [IsObsolete] bit  NOT NULL,
+    [MatchTime] time  NOT NULL,
+    [Venue_ID] int  NOT NULL,
+    [CompetitionMatchTypes_ID] int  NULL,
+    [Competitions_ID] int  NOT NULL,
+    [HomeTeam_ID] int  NOT NULL,
+    [AwayTeam_ID] int  NOT NULL
 );
 GO
 
@@ -57,7 +145,7 @@ CREATE TABLE [dbo].[Players] (
     [ID] int IDENTITY(1,1) NOT NULL,
     [FirstName] nvarchar(max)  NOT NULL,
     [LastName] nvarchar(max)  NOT NULL,
-    [IsObsolete] nvarchar(max)  NOT NULL,
+    [IsObsolete] bit  NOT NULL,
     [CountyTeam_ID] int  NULL,
     [ClubTeam_ID] int  NOT NULL
 );
@@ -75,17 +163,33 @@ GO
 -- Creating table 'MatchPlayers'
 CREATE TABLE [dbo].[MatchPlayers] (
     [ID] int IDENTITY(1,1) NOT NULL,
-    [Goals] nvarchar(max)  NOT NULL,
-    [Penalties] nvarchar(max)  NOT NULL,
-    [Points] nvarchar(max)  NOT NULL,
-    [Frees] nvarchar(max)  NOT NULL,
-    [IsSubbed] nvarchar(max)  NOT NULL,
-    [MinuteOn] nvarchar(max)  NOT NULL,
-    [MinuteOff] nvarchar(max)  NOT NULL,
-    [PlayerNumber] nvarchar(max)  NOT NULL,
+    [Goals] int  NOT NULL,
+    [Penalties] int  NOT NULL,
+    [Points] int  NOT NULL,
+    [Frees] int  NOT NULL,
+    [IsSubbed] bit  NOT NULL,
+    [MinuteOn] int  NOT NULL,
+    [MinuteOff] int  NOT NULL,
+    [PlayerNumber] int  NOT NULL,
     [Match_ID] int  NOT NULL,
     [Teams_ID] int  NOT NULL,
     [Player_ID] int  NOT NULL
+);
+GO
+
+-- Creating table 'Competitions'
+CREATE TABLE [dbo].[Competitions] (
+    [ID] int IDENTITY(1,1) NOT NULL,
+    [Name] nvarchar(max)  NOT NULL,
+    [StartDate] datetime  NOT NULL,
+    [EndDate] datetime  NOT NULL
+);
+GO
+
+-- Creating table 'CompetitionMatchTypes'
+CREATE TABLE [dbo].[CompetitionMatchTypes] (
+    [ID] int IDENTITY(1,1) NOT NULL,
+    [Name] nvarchar(max)  NOT NULL
 );
 GO
 
@@ -99,6 +203,13 @@ GO
 CREATE TABLE [dbo].[Teams_ClubTeam] (
     [ID] int  NOT NULL,
     [County_ID] int  NOT NULL
+);
+GO
+
+-- Creating table 'CompetitionMatchTypeCompetition'
+CREATE TABLE [dbo].[CompetitionMatchTypeCompetition] (
+    [CompetitionMatchType_ID] int  NOT NULL,
+    [Competitions_ID] int  NOT NULL
 );
 GO
 
@@ -142,6 +253,18 @@ ADD CONSTRAINT [PK_MatchPlayers]
     PRIMARY KEY CLUSTERED ([ID] ASC);
 GO
 
+-- Creating primary key on [ID] in table 'Competitions'
+ALTER TABLE [dbo].[Competitions]
+ADD CONSTRAINT [PK_Competitions]
+    PRIMARY KEY CLUSTERED ([ID] ASC);
+GO
+
+-- Creating primary key on [ID] in table 'CompetitionMatchTypes'
+ALTER TABLE [dbo].[CompetitionMatchTypes]
+ADD CONSTRAINT [PK_CompetitionMatchTypes]
+    PRIMARY KEY CLUSTERED ([ID] ASC);
+GO
+
 -- Creating primary key on [ID] in table 'Teams_CountyTeam'
 ALTER TABLE [dbo].[Teams_CountyTeam]
 ADD CONSTRAINT [PK_Teams_CountyTeam]
@@ -152,6 +275,12 @@ GO
 ALTER TABLE [dbo].[Teams_ClubTeam]
 ADD CONSTRAINT [PK_Teams_ClubTeam]
     PRIMARY KEY CLUSTERED ([ID] ASC);
+GO
+
+-- Creating primary key on [CompetitionMatchType_ID], [Competitions_ID] in table 'CompetitionMatchTypeCompetition'
+ALTER TABLE [dbo].[CompetitionMatchTypeCompetition]
+ADD CONSTRAINT [PK_CompetitionMatchTypeCompetition]
+    PRIMARY KEY CLUSTERED ([CompetitionMatchType_ID], [Competitions_ID] ASC);
 GO
 
 -- --------------------------------------------------
@@ -291,6 +420,90 @@ GO
 CREATE INDEX [IX_FK_PlayerMatchPlayer]
 ON [dbo].[MatchPlayers]
     ([Player_ID]);
+GO
+
+-- Creating foreign key on [CompetitionMatchTypes_ID] in table 'Matches'
+ALTER TABLE [dbo].[Matches]
+ADD CONSTRAINT [FK_MatchCompetitionMatchType]
+    FOREIGN KEY ([CompetitionMatchTypes_ID])
+    REFERENCES [dbo].[CompetitionMatchTypes]
+        ([ID])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_MatchCompetitionMatchType'
+CREATE INDEX [IX_FK_MatchCompetitionMatchType]
+ON [dbo].[Matches]
+    ([CompetitionMatchTypes_ID]);
+GO
+
+-- Creating foreign key on [CompetitionMatchType_ID] in table 'CompetitionMatchTypeCompetition'
+ALTER TABLE [dbo].[CompetitionMatchTypeCompetition]
+ADD CONSTRAINT [FK_CompetitionMatchTypeCompetition_CompetitionMatchType]
+    FOREIGN KEY ([CompetitionMatchType_ID])
+    REFERENCES [dbo].[CompetitionMatchTypes]
+        ([ID])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating foreign key on [Competitions_ID] in table 'CompetitionMatchTypeCompetition'
+ALTER TABLE [dbo].[CompetitionMatchTypeCompetition]
+ADD CONSTRAINT [FK_CompetitionMatchTypeCompetition_Competition]
+    FOREIGN KEY ([Competitions_ID])
+    REFERENCES [dbo].[Competitions]
+        ([ID])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_CompetitionMatchTypeCompetition_Competition'
+CREATE INDEX [IX_FK_CompetitionMatchTypeCompetition_Competition]
+ON [dbo].[CompetitionMatchTypeCompetition]
+    ([Competitions_ID]);
+GO
+
+-- Creating foreign key on [Competitions_ID] in table 'Matches'
+ALTER TABLE [dbo].[Matches]
+ADD CONSTRAINT [FK_MatchCompetition]
+    FOREIGN KEY ([Competitions_ID])
+    REFERENCES [dbo].[Competitions]
+        ([ID])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_MatchCompetition'
+CREATE INDEX [IX_FK_MatchCompetition]
+ON [dbo].[Matches]
+    ([Competitions_ID]);
+GO
+
+-- Creating foreign key on [HomeTeam_ID] in table 'Matches'
+ALTER TABLE [dbo].[Matches]
+ADD CONSTRAINT [FK_TeamMatch]
+    FOREIGN KEY ([HomeTeam_ID])
+    REFERENCES [dbo].[Teams]
+        ([ID])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_TeamMatch'
+CREATE INDEX [IX_FK_TeamMatch]
+ON [dbo].[Matches]
+    ([HomeTeam_ID]);
+GO
+
+-- Creating foreign key on [AwayTeam_ID] in table 'Matches'
+ALTER TABLE [dbo].[Matches]
+ADD CONSTRAINT [FK_TeamMatch1]
+    FOREIGN KEY ([AwayTeam_ID])
+    REFERENCES [dbo].[Teams]
+        ([ID])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_TeamMatch1'
+CREATE INDEX [IX_FK_TeamMatch1]
+ON [dbo].[Matches]
+    ([AwayTeam_ID]);
 GO
 
 -- Creating foreign key on [ID] in table 'Teams_CountyTeam'

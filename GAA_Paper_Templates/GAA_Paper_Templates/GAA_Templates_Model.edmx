@@ -12,8 +12,11 @@
     <EntitySet Name="Players" EntityType="GAA_Templates_Model.Store.Players" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Venues" EntityType="GAA_Templates_Model.Store.Venues" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="MatchPlayers" EntityType="GAA_Templates_Model.Store.MatchPlayers" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Competitions" EntityType="GAA_Templates_Model.Store.Competitions" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="CompetitionMatchTypes" EntityType="GAA_Templates_Model.Store.CompetitionMatchTypes" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Teams_CountyTeam" EntityType="GAA_Templates_Model.Store.Teams_CountyTeam" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Teams_ClubTeam" EntityType="GAA_Templates_Model.Store.Teams_ClubTeam" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="CompetitionMatchTypeCompetition" EntityType="GAA_Templates_Model.Store.CompetitionMatchTypeCompetition" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="CountyCountyTeam" Association="GAA_Templates_Model.Store.CountyCountyTeam">
       <End Role="County" EntitySet="Counties" />
       <End Role="CountyTeam" EntitySet="Teams_CountyTeam" />
@@ -50,6 +53,30 @@
       <End Role="Player" EntitySet="Players" />
       <End Role="MatchPlayer" EntitySet="MatchPlayers" />
     </AssociationSet>
+    <AssociationSet Name="MatchCompetitionMatchType" Association="GAA_Templates_Model.Store.MatchCompetitionMatchType">
+      <End Role="Match" EntitySet="Matches" />
+      <End Role="CompetitionMatchType" EntitySet="CompetitionMatchTypes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CompetitionMatchTypeCompetition_CompetitionMatchType" Association="GAA_Templates_Model.Store.FK_CompetitionMatchTypeCompetition_CompetitionMatchType">
+      <End Role="CompetitionMatchType" EntitySet="CompetitionMatchTypes" />
+      <End Role="CompetitionMatchTypeCompetition" EntitySet="CompetitionMatchTypeCompetition" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CompetitionMatchTypeCompetition_Competition" Association="GAA_Templates_Model.Store.FK_CompetitionMatchTypeCompetition_Competition">
+      <End Role="Competition" EntitySet="Competitions" />
+      <End Role="CompetitionMatchTypeCompetition" EntitySet="CompetitionMatchTypeCompetition" />
+    </AssociationSet>
+    <AssociationSet Name="MatchCompetition" Association="GAA_Templates_Model.Store.MatchCompetition">
+      <End Role="Match" EntitySet="Matches" />
+      <End Role="Competition" EntitySet="Competitions" />
+    </AssociationSet>
+    <AssociationSet Name="TeamMatch" Association="GAA_Templates_Model.Store.TeamMatch">
+      <End Role="Team" EntitySet="Teams" />
+      <End Role="Match" EntitySet="Matches" />
+    </AssociationSet>
+    <AssociationSet Name="TeamMatch1" Association="GAA_Templates_Model.Store.TeamMatch1">
+      <End Role="Team" EntitySet="Teams" />
+      <End Role="Match" EntitySet="Matches" />
+    </AssociationSet>
     <AssociationSet Name="FK_CountyTeam_inherits_Team" Association="GAA_Templates_Model.Store.FK_CountyTeam_inherits_Team">
       <End Role="Team" EntitySet="Teams" />
       <End Role="CountyTeam" EntitySet="Teams_CountyTeam" />
@@ -64,10 +91,14 @@
       <PropertyRef Name="ID" />
     </Key>
     <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="MatchDate" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="IsObsolete" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="MatchTime" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="MatchDate" Type="datetime" Nullable="false" />
+    <Property Name="IsObsolete" Type="bit" Nullable="false" />
+    <Property Name="MatchTime" Type="time" Nullable="false" />
     <Property Name="Venue_ID" Type="int" Nullable="false" />
+    <Property Name="CompetitionMatchTypes_ID" Type="int" Nullable="true" />
+    <Property Name="Competitions_ID" Type="int" Nullable="false" />
+    <Property Name="HomeTeam_ID" Type="int" Nullable="false" />
+    <Property Name="AwayTeam_ID" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Teams">
     <Key>
@@ -91,7 +122,7 @@
     <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="FirstName" Type="nvarchar(max)" Nullable="false" />
     <Property Name="LastName" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="IsObsolete" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="IsObsolete" Type="bit" Nullable="false" />
     <Property Name="CountyTeam_ID" Type="int" Nullable="true" />
     <Property Name="ClubTeam_ID" Type="int" Nullable="false" />
   </EntityType>
@@ -109,17 +140,33 @@
       <PropertyRef Name="ID" />
     </Key>
     <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Goals" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="Penalties" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="Points" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="Frees" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="IsSubbed" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="MinuteOn" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="MinuteOff" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="PlayerNumber" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Goals" Type="int" Nullable="false" />
+    <Property Name="Penalties" Type="int" Nullable="false" />
+    <Property Name="Points" Type="int" Nullable="false" />
+    <Property Name="Frees" Type="int" Nullable="false" />
+    <Property Name="IsSubbed" Type="bit" Nullable="false" />
+    <Property Name="MinuteOn" Type="int" Nullable="false" />
+    <Property Name="MinuteOff" Type="int" Nullable="false" />
+    <Property Name="PlayerNumber" Type="int" Nullable="false" />
     <Property Name="Match_ID" Type="int" Nullable="false" />
     <Property Name="Teams_ID" Type="int" Nullable="false" />
     <Property Name="Player_ID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Competitions">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="StartDate" Type="datetime" Nullable="false" />
+    <Property Name="EndDate" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CompetitionMatchTypes">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
   <EntityType Name="Teams_CountyTeam">
     <Key>
@@ -133,6 +180,14 @@
     </Key>
     <Property Name="ID" Type="int" Nullable="false" />
     <Property Name="County_ID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CompetitionMatchTypeCompetition">
+    <Key>
+      <PropertyRef Name="CompetitionMatchType_ID" />
+      <PropertyRef Name="Competitions_ID" />
+    </Key>
+    <Property Name="CompetitionMatchType_ID" Type="int" Nullable="false" />
+    <Property Name="Competitions_ID" Type="int" Nullable="false" />
   </EntityType>
   <Association Name="CountyCountyTeam">
     <End Role="County" Type="GAA_Templates_Model.Store.Counties" Multiplicity="*" />
@@ -242,6 +297,78 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="MatchCompetitionMatchType">
+    <End Role="Match" Type="GAA_Templates_Model.Store.Matches" Multiplicity="*" />
+    <End Role="CompetitionMatchType" Type="GAA_Templates_Model.Store.CompetitionMatchTypes" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="CompetitionMatchType">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Match">
+        <PropertyRef Name="CompetitionMatchTypes_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="MatchCompetition">
+    <End Role="Match" Type="GAA_Templates_Model.Store.Matches" Multiplicity="*" />
+    <End Role="Competition" Type="GAA_Templates_Model.Store.Competitions" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Competition">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Match">
+        <PropertyRef Name="Competitions_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="TeamMatch">
+    <End Role="Team" Type="GAA_Templates_Model.Store.Teams" Multiplicity="1" />
+    <End Role="Match" Type="GAA_Templates_Model.Store.Matches" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Team">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Match">
+        <PropertyRef Name="HomeTeam_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="TeamMatch1">
+    <End Role="Team" Type="GAA_Templates_Model.Store.Teams" Multiplicity="1" />
+    <End Role="Match" Type="GAA_Templates_Model.Store.Matches" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Team">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Match">
+        <PropertyRef Name="AwayTeam_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CompetitionMatchTypeCompetition_CompetitionMatchType">
+    <End Role="CompetitionMatchType" Type="GAA_Templates_Model.Store.CompetitionMatchTypes" Multiplicity="1" />
+    <End Role="CompetitionMatchTypeCompetition" Type="GAA_Templates_Model.Store.CompetitionMatchTypeCompetition" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CompetitionMatchType">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="CompetitionMatchTypeCompetition">
+        <PropertyRef Name="CompetitionMatchType_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CompetitionMatchTypeCompetition_Competition">
+    <End Role="CompetitionMatchTypeCompetition" Type="GAA_Templates_Model.Store.CompetitionMatchTypeCompetition" Multiplicity="*" />
+    <End Role="Competition" Type="GAA_Templates_Model.Store.Competitions" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Competition">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="CompetitionMatchTypeCompetition">
+        <PropertyRef Name="Competitions_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_CountyTeam_inherits_Team">
     <End Role="Team" Type="GAA_Templates_Model.Store.Teams" Multiplicity="1">
       <OnDelete Action="Cascade" />
@@ -317,17 +444,43 @@
             <End Role="Player" EntitySet="Players" />
             <End Role="MatchPlayer" EntitySet="MatchPlayers" />
           </AssociationSet>
+          <EntitySet Name="Competitions" EntityType="GAA_Templates_Model.Competition" />
+          <EntitySet Name="CompetitionMatchTypes" EntityType="GAA_Templates_Model.CompetitionMatchType" />
+          <AssociationSet Name="MatchCompetitionMatchType" Association="GAA_Templates_Model.MatchCompetitionMatchType">
+            <End Role="Match" EntitySet="Matches" />
+            <End Role="CompetitionMatchType" EntitySet="CompetitionMatchTypes" />
+          </AssociationSet>
+          <AssociationSet Name="CompetitionMatchTypeCompetition" Association="GAA_Templates_Model.CompetitionMatchTypeCompetition">
+            <End Role="CompetitionMatchType" EntitySet="CompetitionMatchTypes" />
+            <End Role="Competition" EntitySet="Competitions" />
+          </AssociationSet>
+          <AssociationSet Name="MatchCompetition" Association="GAA_Templates_Model.MatchCompetition">
+            <End Role="Match" EntitySet="Matches" />
+            <End Role="Competition" EntitySet="Competitions" />
+          </AssociationSet>
+          <AssociationSet Name="TeamMatch" Association="GAA_Templates_Model.TeamMatch">
+            <End Role="Team" EntitySet="Teams" />
+            <End Role="Match" EntitySet="Matches" />
+          </AssociationSet>
+          <AssociationSet Name="TeamMatch1" Association="GAA_Templates_Model.TeamMatch1">
+            <End Role="Team" EntitySet="Teams" />
+            <End Role="Match" EntitySet="Matches" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Match">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="MatchDate" Type="String" Nullable="false" />
-          <Property Name="IsObsolete" Type="String" Nullable="false" />
+          <Property Name="MatchDate" Type="DateTime" Nullable="false" />
+          <Property Name="IsObsolete" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Venue" Relationship="GAA_Templates_Model.VenueMatch" FromRole="Match" ToRole="Venue" />
-          <Property Name="MatchTime" Type="String" Nullable="false" />
+          <Property Name="MatchTime" Type="Time" Nullable="false" />
           <NavigationProperty Name="MatchPlayers" Relationship="GAA_Templates_Model.MatchMatchPlayer" FromRole="Match" ToRole="MatchPlayer" />
+          <NavigationProperty Name="CompetitionMatchTypes" Relationship="GAA_Templates_Model.MatchCompetitionMatchType" FromRole="Match" ToRole="CompetitionMatchType" />
+          <NavigationProperty Name="Competitions" Relationship="GAA_Templates_Model.MatchCompetition" FromRole="Match" ToRole="Competition" />
+          <NavigationProperty Name="HomeTeam" Relationship="GAA_Templates_Model.TeamMatch" FromRole="Match" ToRole="Team" />
+          <NavigationProperty Name="AwayTeam" Relationship="GAA_Templates_Model.TeamMatch1" FromRole="Match" ToRole="Team" />
         </EntityType>
         <EntityType Name="Team">
           <Key>
@@ -336,6 +489,8 @@
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" Nullable="false" />
           <NavigationProperty Name="MatchPlayer" Relationship="GAA_Templates_Model.MatchPlayerTeam" FromRole="Team" ToRole="MatchPlayer" />
+          <NavigationProperty Name="Matches" Relationship="GAA_Templates_Model.TeamMatch" FromRole="Team" ToRole="Match" />
+          <NavigationProperty Name="Matches1" Relationship="GAA_Templates_Model.TeamMatch1" FromRole="Team" ToRole="Match" />
         </EntityType>
         <EntityType Name="County">
           <Key>
@@ -373,7 +528,7 @@
           <NavigationProperty Name="CountyTeam" Relationship="GAA_Templates_Model.CountyTeamPlayer" FromRole="Player" ToRole="CountyTeam" />
           <NavigationProperty Name="ClubTeam" Relationship="GAA_Templates_Model.ClubTeamPlayer" FromRole="Player" ToRole="ClubTeam" />
           <NavigationProperty Name="MatchPlayers" Relationship="GAA_Templates_Model.PlayerMatchPlayer" FromRole="Player" ToRole="MatchPlayer" />
-          <Property Name="IsObsolete" Type="String" Nullable="false" />
+          <Property Name="IsObsolete" Type="Boolean" Nullable="false" />
         </EntityType>
         <Association Name="CountyTeamPlayer">
           <End Type="GAA_Templates_Model.CountyTeam" Role="CountyTeam" Multiplicity="0..1" />
@@ -406,17 +561,17 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Goals" Type="String" Nullable="false" />
-          <Property Name="Penalties" Type="String" Nullable="false" />
-          <Property Name="Points" Type="String" Nullable="false" />
-          <Property Name="Frees" Type="String" Nullable="false" />
+          <Property Name="Goals" Type="Int32" Nullable="false" />
+          <Property Name="Penalties" Type="Int32" Nullable="false" />
+          <Property Name="Points" Type="Int32" Nullable="false" />
+          <Property Name="Frees" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Match" Relationship="GAA_Templates_Model.MatchMatchPlayer" FromRole="MatchPlayer" ToRole="Match" />
           <NavigationProperty Name="Teams" Relationship="GAA_Templates_Model.MatchPlayerTeam" FromRole="MatchPlayer" ToRole="Team" />
           <NavigationProperty Name="Player" Relationship="GAA_Templates_Model.PlayerMatchPlayer" FromRole="MatchPlayer" ToRole="Player" />
-          <Property Name="IsSubbed" Type="String" Nullable="false" />
-          <Property Name="MinuteOn" Type="String" Nullable="false" />
-          <Property Name="MinuteOff" Type="String" Nullable="false" />
-          <Property Name="PlayerNumber" Type="String" Nullable="false" />
+          <Property Name="IsSubbed" Type="Boolean" Nullable="false" />
+          <Property Name="MinuteOn" Type="Int32" Nullable="false" />
+          <Property Name="MinuteOff" Type="Int32" Nullable="false" />
+          <Property Name="PlayerNumber" Type="Int32" Nullable="false" />
         </EntityType>
         <Association Name="MatchMatchPlayer">
           <End Type="GAA_Templates_Model.Match" Role="Match" Multiplicity="1" />
@@ -429,6 +584,46 @@
         <Association Name="PlayerMatchPlayer">
           <End Type="GAA_Templates_Model.Player" Role="Player" Multiplicity="1" />
           <End Type="GAA_Templates_Model.MatchPlayer" Role="MatchPlayer" Multiplicity="*" />
+        </Association>
+        <EntityType Name="Competition">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <NavigationProperty Name="CompetitionMatchType" Relationship="GAA_Templates_Model.CompetitionMatchTypeCompetition" FromRole="Competition" ToRole="CompetitionMatchType" />
+          <NavigationProperty Name="Match" Relationship="GAA_Templates_Model.MatchCompetition" FromRole="Competition" ToRole="Match" />
+          <Property Name="StartDate" Type="DateTime" Nullable="false" />
+          <Property Name="EndDate" Type="DateTime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CompetitionMatchType">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <NavigationProperty Name="Match" Relationship="GAA_Templates_Model.MatchCompetitionMatchType" FromRole="CompetitionMatchType" ToRole="Match" />
+          <NavigationProperty Name="Competitions" Relationship="GAA_Templates_Model.CompetitionMatchTypeCompetition" FromRole="CompetitionMatchType" ToRole="Competition" />
+        </EntityType>
+        <Association Name="MatchCompetitionMatchType">
+          <End Type="GAA_Templates_Model.Match" Role="Match" Multiplicity="*" />
+          <End Type="GAA_Templates_Model.CompetitionMatchType" Role="CompetitionMatchType" Multiplicity="0..1" />
+        </Association>
+        <Association Name="CompetitionMatchTypeCompetition">
+          <End Type="GAA_Templates_Model.CompetitionMatchType" Role="CompetitionMatchType" Multiplicity="*" />
+          <End Type="GAA_Templates_Model.Competition" Role="Competition" Multiplicity="*" />
+        </Association>
+        <Association Name="MatchCompetition">
+          <End Type="GAA_Templates_Model.Match" Role="Match" Multiplicity="*" />
+          <End Type="GAA_Templates_Model.Competition" Role="Competition" Multiplicity="1" />
+        </Association>
+        <Association Name="TeamMatch">
+          <End Type="GAA_Templates_Model.Team" Role="Team" Multiplicity="1" />
+          <End Type="GAA_Templates_Model.Match" Role="Match" Multiplicity="*" />
+        </Association>
+        <Association Name="TeamMatch1">
+          <End Type="GAA_Templates_Model.Team" Role="Team" Multiplicity="1" />
+          <End Type="GAA_Templates_Model.Match" Role="Match" Multiplicity="*" />
         </Association>
       </Schema>
     </edmx:ConceptualModels>
@@ -506,6 +701,24 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Competitions">
+      <EntityTypeMapping TypeName="IsTypeOf(GAA_Templates_Model.Competition)">
+        <MappingFragment StoreEntitySet="Competitions">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+          <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CompetitionMatchTypes">
+      <EntityTypeMapping TypeName="IsTypeOf(GAA_Templates_Model.CompetitionMatchType)">
+        <MappingFragment StoreEntitySet="CompetitionMatchTypes">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <AssociationSetMapping Name="CountyCountyTeam" TypeName="GAA_Templates_Model.CountyCountyTeam" StoreEntitySet="Counties">
       <EndProperty Name="CountyTeam">
         <ScalarProperty Name="ID" ColumnName="CountyTeams_ID" />
@@ -576,6 +789,47 @@
         <ScalarProperty Name="ID" ColumnName="Player_ID" />
       </EndProperty>
       <EndProperty Name="MatchPlayer">
+        <ScalarProperty Name="ID" ColumnName="ID" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="MatchCompetitionMatchType" TypeName="GAA_Templates_Model.MatchCompetitionMatchType" StoreEntitySet="Matches">
+      <EndProperty Name="CompetitionMatchType">
+        <ScalarProperty Name="ID" ColumnName="CompetitionMatchTypes_ID" />
+      </EndProperty>
+      <EndProperty Name="Match">
+        <ScalarProperty Name="ID" ColumnName="ID" />
+      </EndProperty>
+      <Condition ColumnName="CompetitionMatchTypes_ID" IsNull="false" />
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="CompetitionMatchTypeCompetition" TypeName="GAA_Templates_Model.CompetitionMatchTypeCompetition" StoreEntitySet="CompetitionMatchTypeCompetition">
+      <EndProperty Name="CompetitionMatchType">
+        <ScalarProperty Name="ID" ColumnName="CompetitionMatchType_ID" />
+      </EndProperty>
+      <EndProperty Name="Competition">
+        <ScalarProperty Name="ID" ColumnName="Competitions_ID" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="MatchCompetition" TypeName="GAA_Templates_Model.MatchCompetition" StoreEntitySet="Matches">
+      <EndProperty Name="Competition">
+        <ScalarProperty Name="ID" ColumnName="Competitions_ID" />
+      </EndProperty>
+      <EndProperty Name="Match">
+        <ScalarProperty Name="ID" ColumnName="ID" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="TeamMatch" TypeName="GAA_Templates_Model.TeamMatch" StoreEntitySet="Matches">
+      <EndProperty Name="Team">
+        <ScalarProperty Name="ID" ColumnName="HomeTeam_ID" />
+      </EndProperty>
+      <EndProperty Name="Match">
+        <ScalarProperty Name="ID" ColumnName="ID" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="TeamMatch1" TypeName="GAA_Templates_Model.TeamMatch1" StoreEntitySet="Matches">
+      <EndProperty Name="Team">
+        <ScalarProperty Name="ID" ColumnName="AwayTeam_ID" />
+      </EndProperty>
+      <EndProperty Name="Match">
         <ScalarProperty Name="ID" ColumnName="ID" />
       </EndProperty>
     </AssociationSetMapping>

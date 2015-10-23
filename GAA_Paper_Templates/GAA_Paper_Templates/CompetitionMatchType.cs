@@ -12,25 +12,21 @@ namespace GAA_Paper_Templates
     using System;
     using System.Collections.Generic;
     
-    public partial class Match
+    public partial class CompetitionMatchType
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Match()
+        public CompetitionMatchType()
         {
-            this.MatchPlayers = new HashSet<MatchPlayer>();
+            this.Match = new HashSet<Match>();
+            this.Competitions = new HashSet<Competition>();
         }
     
         public int ID { get; set; }
-        public System.DateTime MatchDate { get; set; }
-        public bool IsObsolete { get; set; }
-        public System.TimeSpan MatchTime { get; set; }
+        public string Name { get; set; }
     
-        public virtual Venue Venue { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<MatchPlayer> MatchPlayers { get; set; }
-        public virtual CompetitionMatchType CompetitionMatchTypes { get; set; }
-        public virtual Competition Competitions { get; set; }
-        public virtual Team HomeTeam { get; set; }
-        public virtual Team AwayTeam { get; set; }
+        public virtual ICollection<Match> Match { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Competition> Competitions { get; set; }
     }
 }

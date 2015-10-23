@@ -60,6 +60,12 @@
     <Compile Include="ClubTeam.cs">
       <DependentUpon>GAA_Templates_Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Competition.cs">
+      <DependentUpon>GAA_Templates_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CompetitionMatchType.cs">
+      <DependentUpon>GAA_Templates_Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="County.cs">
       <DependentUpon>GAA_Templates_Model.tt</DependentUpon>
     </Compile>

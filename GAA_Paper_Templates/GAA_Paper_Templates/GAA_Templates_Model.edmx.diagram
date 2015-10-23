@@ -8,7 +8,7 @@
         <EntityTypeShape EntityType="GAA_Templates_Model.Match" Width="1.5" PointX="7.625" PointY="0.5" />
         <EntityTypeShape EntityType="GAA_Templates_Model.Team" Width="1.5" PointX="2.25" PointY="2.625" />
         <EntityTypeShape EntityType="GAA_Templates_Model.County" Width="1.5" PointX="2.25" PointY="0.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="GAA_Templates_Model.CountyTeam" Width="1.5" PointX="4" PointY="2.625" />
+        <EntityTypeShape EntityType="GAA_Templates_Model.CountyTeam" Width="1.5" PointX="4" PointY="4.25" />
         <EntityTypeShape EntityType="GAA_Templates_Model.ClubTeam" Width="1.5" PointX="0.5" PointY="2.625" />
         <InheritanceConnector EntityType="GAA_Templates_Model.CountyTeam" />
         <InheritanceConnector EntityType="GAA_Templates_Model.ClubTeam" />
@@ -21,10 +21,17 @@
         <EntityTypeShape EntityType="GAA_Templates_Model.Venue" Width="1.5" PointX="5.625" PointY="0.5" />
         <AssociationConnector Association="GAA_Templates_Model.CountyVenue" />
         <AssociationConnector Association="GAA_Templates_Model.VenueMatch" />
-        <EntityTypeShape EntityType="GAA_Templates_Model.MatchPlayer" Width="1.5" PointX="5.625" PointY="2.625" />
+        <EntityTypeShape EntityType="GAA_Templates_Model.MatchPlayer" Width="1.5" PointX="5.625" PointY="3.375" />
         <AssociationConnector Association="GAA_Templates_Model.MatchMatchPlayer" />
         <AssociationConnector Association="GAA_Templates_Model.MatchPlayerTeam" />
         <AssociationConnector Association="GAA_Templates_Model.PlayerMatchPlayer" />
+        <EntityTypeShape EntityType="GAA_Templates_Model.Competition" Width="2" PointX="10" PointY="2.75" />
+        <EntityTypeShape EntityType="GAA_Templates_Model.CompetitionMatchType" Width="2" PointX="10" PointY="0.5" />
+        <AssociationConnector Association="GAA_Templates_Model.MatchCompetitionMatchType" />
+        <AssociationConnector Association="GAA_Templates_Model.CompetitionMatchTypeCompetition" />
+        <AssociationConnector Association="GAA_Templates_Model.MatchCompetition" />
+        <AssociationConnector Association="GAA_Templates_Model.TeamMatch" />
+        <AssociationConnector Association="GAA_Templates_Model.TeamMatch1" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

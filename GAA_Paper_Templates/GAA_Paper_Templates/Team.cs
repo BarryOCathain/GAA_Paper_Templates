@@ -18,6 +18,8 @@ namespace GAA_Paper_Templates
         public Team()
         {
             this.MatchPlayer = new HashSet<MatchPlayer>();
+            this.Matches = new HashSet<Match>();
+            this.Matches1 = new HashSet<Match>();
         }
     
         public int ID { get; set; }
@@ -25,5 +27,9 @@ namespace GAA_Paper_Templates
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MatchPlayer> MatchPlayer { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Match> Matches { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Match> Matches1 { get; set; }
     }
 }

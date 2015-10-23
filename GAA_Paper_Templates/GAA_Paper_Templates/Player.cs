@@ -23,7 +23,7 @@ namespace GAA_Paper_Templates
         public int ID { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public string IsObsolete { get; set; }
+        public bool IsObsolete { get; set; }
     
         public virtual CountyTeam CountyTeam { get; set; }
         public virtual ClubTeam ClubTeam { get; set; }
