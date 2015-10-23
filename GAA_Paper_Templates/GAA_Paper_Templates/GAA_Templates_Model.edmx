@@ -4,11 +4,273 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl" Namespace="GAA_Templates_Model.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2005">
-        <EntityContainer Name="GAA_Templates_ModelTargetContainer" >
-        </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+    <Schema Namespace="GAA_Templates_Model.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="GAA_Templates_ModelStoreContainer">
+    <EntitySet Name="Matches" EntityType="GAA_Templates_Model.Store.Matches" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Teams" EntityType="GAA_Templates_Model.Store.Teams" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Counties" EntityType="GAA_Templates_Model.Store.Counties" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Players" EntityType="GAA_Templates_Model.Store.Players" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Venues" EntityType="GAA_Templates_Model.Store.Venues" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="MatchPlayers" EntityType="GAA_Templates_Model.Store.MatchPlayers" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Teams_CountyTeam" EntityType="GAA_Templates_Model.Store.Teams_CountyTeam" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Teams_ClubTeam" EntityType="GAA_Templates_Model.Store.Teams_ClubTeam" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="CountyCountyTeam" Association="GAA_Templates_Model.Store.CountyCountyTeam">
+      <End Role="County" EntitySet="Counties" />
+      <End Role="CountyTeam" EntitySet="Teams_CountyTeam" />
+    </AssociationSet>
+    <AssociationSet Name="ClubTeamCounty" Association="GAA_Templates_Model.Store.ClubTeamCounty">
+      <End Role="ClubTeam" EntitySet="Teams_ClubTeam" />
+      <End Role="County" EntitySet="Counties" />
+    </AssociationSet>
+    <AssociationSet Name="CountyTeamPlayer" Association="GAA_Templates_Model.Store.CountyTeamPlayer">
+      <End Role="CountyTeam" EntitySet="Teams_CountyTeam" />
+      <End Role="Player" EntitySet="Players" />
+    </AssociationSet>
+    <AssociationSet Name="ClubTeamPlayer" Association="GAA_Templates_Model.Store.ClubTeamPlayer">
+      <End Role="ClubTeam" EntitySet="Teams_ClubTeam" />
+      <End Role="Player" EntitySet="Players" />
+    </AssociationSet>
+    <AssociationSet Name="CountyVenue" Association="GAA_Templates_Model.Store.CountyVenue">
+      <End Role="County" EntitySet="Counties" />
+      <End Role="Venue" EntitySet="Venues" />
+    </AssociationSet>
+    <AssociationSet Name="VenueMatch" Association="GAA_Templates_Model.Store.VenueMatch">
+      <End Role="Venue" EntitySet="Venues" />
+      <End Role="Match" EntitySet="Matches" />
+    </AssociationSet>
+    <AssociationSet Name="MatchMatchPlayer" Association="GAA_Templates_Model.Store.MatchMatchPlayer">
+      <End Role="Match" EntitySet="Matches" />
+      <End Role="MatchPlayer" EntitySet="MatchPlayers" />
+    </AssociationSet>
+    <AssociationSet Name="MatchPlayerTeam" Association="GAA_Templates_Model.Store.MatchPlayerTeam">
+      <End Role="MatchPlayer" EntitySet="MatchPlayers" />
+      <End Role="Team" EntitySet="Teams" />
+    </AssociationSet>
+    <AssociationSet Name="PlayerMatchPlayer" Association="GAA_Templates_Model.Store.PlayerMatchPlayer">
+      <End Role="Player" EntitySet="Players" />
+      <End Role="MatchPlayer" EntitySet="MatchPlayers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CountyTeam_inherits_Team" Association="GAA_Templates_Model.Store.FK_CountyTeam_inherits_Team">
+      <End Role="Team" EntitySet="Teams" />
+      <End Role="CountyTeam" EntitySet="Teams_CountyTeam" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ClubTeam_inherits_Team" Association="GAA_Templates_Model.Store.FK_ClubTeam_inherits_Team">
+      <End Role="Team" EntitySet="Teams" />
+      <End Role="ClubTeam" EntitySet="Teams_ClubTeam" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Matches">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="MatchDate" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="IsObsolete" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="MatchTime" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Venue_ID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Teams">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Counties">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="CountyTeams_ID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Players">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="LastName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="IsObsolete" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="CountyTeam_ID" Type="int" Nullable="true" />
+    <Property Name="ClubTeam_ID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Venues">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Location" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="County_ID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="MatchPlayers">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Goals" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Penalties" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Points" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Frees" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="IsSubbed" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="MinuteOn" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="MinuteOff" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="PlayerNumber" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Match_ID" Type="int" Nullable="false" />
+    <Property Name="Teams_ID" Type="int" Nullable="false" />
+    <Property Name="Player_ID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Teams_CountyTeam">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Teams_ClubTeam">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="County_ID" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="CountyCountyTeam">
+    <End Role="County" Type="GAA_Templates_Model.Store.Counties" Multiplicity="*" />
+    <End Role="CountyTeam" Type="GAA_Templates_Model.Store.Teams_CountyTeam" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="CountyTeam">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="County">
+        <PropertyRef Name="CountyTeams_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ClubTeamCounty">
+    <End Role="ClubTeam" Type="GAA_Templates_Model.Store.Teams_ClubTeam" Multiplicity="*" />
+    <End Role="County" Type="GAA_Templates_Model.Store.Counties" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="County">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ClubTeam">
+        <PropertyRef Name="County_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CountyTeamPlayer">
+    <End Role="CountyTeam" Type="GAA_Templates_Model.Store.Teams_CountyTeam" Multiplicity="0..1" />
+    <End Role="Player" Type="GAA_Templates_Model.Store.Players" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CountyTeam">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Player">
+        <PropertyRef Name="CountyTeam_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ClubTeamPlayer">
+    <End Role="ClubTeam" Type="GAA_Templates_Model.Store.Teams_ClubTeam" Multiplicity="1" />
+    <End Role="Player" Type="GAA_Templates_Model.Store.Players" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ClubTeam">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Player">
+        <PropertyRef Name="ClubTeam_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CountyVenue">
+    <End Role="County" Type="GAA_Templates_Model.Store.Counties" Multiplicity="1" />
+    <End Role="Venue" Type="GAA_Templates_Model.Store.Venues" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="County">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Venue">
+        <PropertyRef Name="County_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="VenueMatch">
+    <End Role="Venue" Type="GAA_Templates_Model.Store.Venues" Multiplicity="1" />
+    <End Role="Match" Type="GAA_Templates_Model.Store.Matches" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Venue">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Match">
+        <PropertyRef Name="Venue_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="MatchMatchPlayer">
+    <End Role="Match" Type="GAA_Templates_Model.Store.Matches" Multiplicity="1" />
+    <End Role="MatchPlayer" Type="GAA_Templates_Model.Store.MatchPlayers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Match">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="MatchPlayer">
+        <PropertyRef Name="Match_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="MatchPlayerTeam">
+    <End Role="MatchPlayer" Type="GAA_Templates_Model.Store.MatchPlayers" Multiplicity="*" />
+    <End Role="Team" Type="GAA_Templates_Model.Store.Teams" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Team">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="MatchPlayer">
+        <PropertyRef Name="Teams_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="PlayerMatchPlayer">
+    <End Role="Player" Type="GAA_Templates_Model.Store.Players" Multiplicity="1" />
+    <End Role="MatchPlayer" Type="GAA_Templates_Model.Store.MatchPlayers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Player">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="MatchPlayer">
+        <PropertyRef Name="Player_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CountyTeam_inherits_Team">
+    <End Role="Team" Type="GAA_Templates_Model.Store.Teams" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="CountyTeam" Type="GAA_Templates_Model.Store.Teams_CountyTeam" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Team">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="CountyTeam">
+        <PropertyRef Name="ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ClubTeam_inherits_Team">
+    <End Role="Team" Type="GAA_Templates_Model.Store.Teams" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="ClubTeam" Type="GAA_Templates_Model.Store.Teams_ClubTeam" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Team">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ClubTeam">
+        <PropertyRef Name="ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="GAA_Templates_Model" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
@@ -24,6 +286,37 @@
             <End Role="ClubTeam" EntitySet="Teams" />
             <End Role="County" EntitySet="Counties" />
           </AssociationSet>
+          <EntitySet Name="Players" EntityType="GAA_Templates_Model.Player" />
+          <AssociationSet Name="CountyTeamPlayer" Association="GAA_Templates_Model.CountyTeamPlayer">
+            <End Role="CountyTeam" EntitySet="Teams" />
+            <End Role="Player" EntitySet="Players" />
+          </AssociationSet>
+          <AssociationSet Name="ClubTeamPlayer" Association="GAA_Templates_Model.ClubTeamPlayer">
+            <End Role="ClubTeam" EntitySet="Teams" />
+            <End Role="Player" EntitySet="Players" />
+          </AssociationSet>
+          <EntitySet Name="Venues" EntityType="GAA_Templates_Model.Venue" />
+          <AssociationSet Name="CountyVenue" Association="GAA_Templates_Model.CountyVenue">
+            <End Role="County" EntitySet="Counties" />
+            <End Role="Venue" EntitySet="Venues" />
+          </AssociationSet>
+          <AssociationSet Name="VenueMatch" Association="GAA_Templates_Model.VenueMatch">
+            <End Role="Venue" EntitySet="Venues" />
+            <End Role="Match" EntitySet="Matches" />
+          </AssociationSet>
+          <EntitySet Name="MatchPlayers" EntityType="GAA_Templates_Model.MatchPlayer" />
+          <AssociationSet Name="MatchMatchPlayer" Association="GAA_Templates_Model.MatchMatchPlayer">
+            <End Role="Match" EntitySet="Matches" />
+            <End Role="MatchPlayer" EntitySet="MatchPlayers" />
+          </AssociationSet>
+          <AssociationSet Name="MatchPlayerTeam" Association="GAA_Templates_Model.MatchPlayerTeam">
+            <End Role="MatchPlayer" EntitySet="MatchPlayers" />
+            <End Role="Team" EntitySet="Teams" />
+          </AssociationSet>
+          <AssociationSet Name="PlayerMatchPlayer" Association="GAA_Templates_Model.PlayerMatchPlayer">
+            <End Role="Player" EntitySet="Players" />
+            <End Role="MatchPlayer" EntitySet="MatchPlayers" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Match">
           <Key>
@@ -32,6 +325,9 @@
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="MatchDate" Type="String" Nullable="false" />
           <Property Name="IsObsolete" Type="String" Nullable="false" />
+          <NavigationProperty Name="Venue" Relationship="GAA_Templates_Model.VenueMatch" FromRole="Match" ToRole="Venue" />
+          <Property Name="MatchTime" Type="String" Nullable="false" />
+          <NavigationProperty Name="MatchPlayers" Relationship="GAA_Templates_Model.MatchMatchPlayer" FromRole="Match" ToRole="MatchPlayer" />
         </EntityType>
         <EntityType Name="Team">
           <Key>
@@ -39,6 +335,7 @@
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" Nullable="false" />
+          <NavigationProperty Name="MatchPlayer" Relationship="GAA_Templates_Model.MatchPlayerTeam" FromRole="Team" ToRole="MatchPlayer" />
         </EntityType>
         <EntityType Name="County">
           <Key>
@@ -48,12 +345,15 @@
           <Property Name="Name" Type="String" Nullable="false" />
           <NavigationProperty Name="CountyTeams" Relationship="GAA_Templates_Model.CountyCountyTeam" FromRole="County" ToRole="CountyTeam" />
           <NavigationProperty Name="ClubTeams" Relationship="GAA_Templates_Model.ClubTeamCounty" FromRole="County" ToRole="ClubTeam" />
+          <NavigationProperty Name="Venues" Relationship="GAA_Templates_Model.CountyVenue" FromRole="County" ToRole="Venue" />
         </EntityType>
         <EntityType Name="CountyTeam" BaseType="GAA_Templates_Model.Team">
           <NavigationProperty Name="County" Relationship="GAA_Templates_Model.CountyCountyTeam" FromRole="CountyTeam" ToRole="County" />
+          <NavigationProperty Name="Players" Relationship="GAA_Templates_Model.CountyTeamPlayer" FromRole="CountyTeam" ToRole="Player" />
         </EntityType>
         <EntityType Name="ClubTeam" BaseType="GAA_Templates_Model.Team">
           <NavigationProperty Name="County" Relationship="GAA_Templates_Model.ClubTeamCounty" FromRole="ClubTeam" ToRole="County" />
+          <NavigationProperty Name="Players" Relationship="GAA_Templates_Model.ClubTeamPlayer" FromRole="ClubTeam" ToRole="Player" />
         </EntityType>
         <Association Name="CountyCountyTeam">
           <End Type="GAA_Templates_Model.County" Role="County" Multiplicity="1" />
@@ -63,17 +363,224 @@
           <End Type="GAA_Templates_Model.ClubTeam" Role="ClubTeam" Multiplicity="*" />
           <End Type="GAA_Templates_Model.County" Role="County" Multiplicity="1" />
         </Association>
+        <EntityType Name="Player">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" Nullable="false" />
+          <Property Name="LastName" Type="String" Nullable="false" />
+          <NavigationProperty Name="CountyTeam" Relationship="GAA_Templates_Model.CountyTeamPlayer" FromRole="Player" ToRole="CountyTeam" />
+          <NavigationProperty Name="ClubTeam" Relationship="GAA_Templates_Model.ClubTeamPlayer" FromRole="Player" ToRole="ClubTeam" />
+          <NavigationProperty Name="MatchPlayers" Relationship="GAA_Templates_Model.PlayerMatchPlayer" FromRole="Player" ToRole="MatchPlayer" />
+          <Property Name="IsObsolete" Type="String" Nullable="false" />
+        </EntityType>
+        <Association Name="CountyTeamPlayer">
+          <End Type="GAA_Templates_Model.CountyTeam" Role="CountyTeam" Multiplicity="0..1" />
+          <End Type="GAA_Templates_Model.Player" Role="Player" Multiplicity="*" />
+        </Association>
+        <Association Name="ClubTeamPlayer">
+          <End Type="GAA_Templates_Model.ClubTeam" Role="ClubTeam" Multiplicity="1" />
+          <End Type="GAA_Templates_Model.Player" Role="Player" Multiplicity="*" />
+        </Association>
+        <EntityType Name="Venue">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <NavigationProperty Name="County" Relationship="GAA_Templates_Model.CountyVenue" FromRole="Venue" ToRole="County" />
+          <NavigationProperty Name="Matches" Relationship="GAA_Templates_Model.VenueMatch" FromRole="Venue" ToRole="Match" />
+          <Property Name="Location" Type="String" Nullable="false" />
+        </EntityType>
+        <Association Name="CountyVenue">
+          <End Type="GAA_Templates_Model.County" Role="County" Multiplicity="1" />
+          <End Type="GAA_Templates_Model.Venue" Role="Venue" Multiplicity="*" />
+        </Association>
+        <Association Name="VenueMatch">
+          <End Type="GAA_Templates_Model.Venue" Role="Venue" Multiplicity="1" />
+          <End Type="GAA_Templates_Model.Match" Role="Match" Multiplicity="*" />
+        </Association>
+        <EntityType Name="MatchPlayer">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Goals" Type="String" Nullable="false" />
+          <Property Name="Penalties" Type="String" Nullable="false" />
+          <Property Name="Points" Type="String" Nullable="false" />
+          <Property Name="Frees" Type="String" Nullable="false" />
+          <NavigationProperty Name="Match" Relationship="GAA_Templates_Model.MatchMatchPlayer" FromRole="MatchPlayer" ToRole="Match" />
+          <NavigationProperty Name="Teams" Relationship="GAA_Templates_Model.MatchPlayerTeam" FromRole="MatchPlayer" ToRole="Team" />
+          <NavigationProperty Name="Player" Relationship="GAA_Templates_Model.PlayerMatchPlayer" FromRole="MatchPlayer" ToRole="Player" />
+          <Property Name="IsSubbed" Type="String" Nullable="false" />
+          <Property Name="MinuteOn" Type="String" Nullable="false" />
+          <Property Name="MinuteOff" Type="String" Nullable="false" />
+          <Property Name="PlayerNumber" Type="String" Nullable="false" />
+        </EntityType>
+        <Association Name="MatchMatchPlayer">
+          <End Type="GAA_Templates_Model.Match" Role="Match" Multiplicity="1" />
+          <End Type="GAA_Templates_Model.MatchPlayer" Role="MatchPlayer" Multiplicity="*" />
+        </Association>
+        <Association Name="MatchPlayerTeam">
+          <End Type="GAA_Templates_Model.MatchPlayer" Role="MatchPlayer" Multiplicity="*" />
+          <End Type="GAA_Templates_Model.Team" Role="Team" Multiplicity="1" />
+        </Association>
+        <Association Name="PlayerMatchPlayer">
+          <End Type="GAA_Templates_Model.Player" Role="Player" Multiplicity="1" />
+          <End Type="GAA_Templates_Model.MatchPlayer" Role="MatchPlayer" Multiplicity="*" />
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
-      <Mapping xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs" Space="C-S">
-        <Alias Key="Model" Value="GAA_Templates_Model" />
-        <Alias Key="Target" Value="GAA_Templates_Model.Store" />
-        <EntityContainerMapping CdmEntityContainer="GAA_Templates_ModelContainer" StorageEntityContainer="GAA_Templates_ModelTargetContainer">
-        </EntityContainerMapping>
-      </Mapping>
-    </edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="GAA_Templates_ModelStoreContainer" CdmEntityContainer="GAA_Templates_ModelContainer">
+    <EntitySetMapping Name="Matches">
+      <EntityTypeMapping TypeName="IsTypeOf(GAA_Templates_Model.Match)">
+        <MappingFragment StoreEntitySet="Matches">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="MatchDate" ColumnName="MatchDate" />
+          <ScalarProperty Name="IsObsolete" ColumnName="IsObsolete" />
+          <ScalarProperty Name="MatchTime" ColumnName="MatchTime" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Teams">
+      <EntityTypeMapping TypeName="IsTypeOf(GAA_Templates_Model.Team)">
+        <MappingFragment StoreEntitySet="Teams">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+      <EntityTypeMapping TypeName="IsTypeOf(GAA_Templates_Model.CountyTeam)">
+        <MappingFragment StoreEntitySet="Teams_CountyTeam">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+      <EntityTypeMapping TypeName="IsTypeOf(GAA_Templates_Model.ClubTeam)">
+        <MappingFragment StoreEntitySet="Teams_ClubTeam">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Counties">
+      <EntityTypeMapping TypeName="IsTypeOf(GAA_Templates_Model.County)">
+        <MappingFragment StoreEntitySet="Counties">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Players">
+      <EntityTypeMapping TypeName="IsTypeOf(GAA_Templates_Model.Player)">
+        <MappingFragment StoreEntitySet="Players">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="IsObsolete" ColumnName="IsObsolete" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Venues">
+      <EntityTypeMapping TypeName="IsTypeOf(GAA_Templates_Model.Venue)">
+        <MappingFragment StoreEntitySet="Venues">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Location" ColumnName="Location" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MatchPlayers">
+      <EntityTypeMapping TypeName="IsTypeOf(GAA_Templates_Model.MatchPlayer)">
+        <MappingFragment StoreEntitySet="MatchPlayers">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Goals" ColumnName="Goals" />
+          <ScalarProperty Name="Penalties" ColumnName="Penalties" />
+          <ScalarProperty Name="Points" ColumnName="Points" />
+          <ScalarProperty Name="Frees" ColumnName="Frees" />
+          <ScalarProperty Name="IsSubbed" ColumnName="IsSubbed" />
+          <ScalarProperty Name="MinuteOn" ColumnName="MinuteOn" />
+          <ScalarProperty Name="MinuteOff" ColumnName="MinuteOff" />
+          <ScalarProperty Name="PlayerNumber" ColumnName="PlayerNumber" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="CountyCountyTeam" TypeName="GAA_Templates_Model.CountyCountyTeam" StoreEntitySet="Counties">
+      <EndProperty Name="CountyTeam">
+        <ScalarProperty Name="ID" ColumnName="CountyTeams_ID" />
+      </EndProperty>
+      <EndProperty Name="County">
+        <ScalarProperty Name="ID" ColumnName="ID" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="ClubTeamCounty" TypeName="GAA_Templates_Model.ClubTeamCounty" StoreEntitySet="Teams_ClubTeam">
+      <EndProperty Name="County">
+        <ScalarProperty Name="ID" ColumnName="County_ID" />
+      </EndProperty>
+      <EndProperty Name="ClubTeam">
+        <ScalarProperty Name="ID" ColumnName="ID" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="CountyTeamPlayer" TypeName="GAA_Templates_Model.CountyTeamPlayer" StoreEntitySet="Players">
+      <EndProperty Name="CountyTeam">
+        <ScalarProperty Name="ID" ColumnName="CountyTeam_ID" />
+      </EndProperty>
+      <EndProperty Name="Player">
+        <ScalarProperty Name="ID" ColumnName="ID" />
+      </EndProperty>
+      <Condition ColumnName="CountyTeam_ID" IsNull="false" />
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="ClubTeamPlayer" TypeName="GAA_Templates_Model.ClubTeamPlayer" StoreEntitySet="Players">
+      <EndProperty Name="ClubTeam">
+        <ScalarProperty Name="ID" ColumnName="ClubTeam_ID" />
+      </EndProperty>
+      <EndProperty Name="Player">
+        <ScalarProperty Name="ID" ColumnName="ID" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="CountyVenue" TypeName="GAA_Templates_Model.CountyVenue" StoreEntitySet="Venues">
+      <EndProperty Name="County">
+        <ScalarProperty Name="ID" ColumnName="County_ID" />
+      </EndProperty>
+      <EndProperty Name="Venue">
+        <ScalarProperty Name="ID" ColumnName="ID" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="VenueMatch" TypeName="GAA_Templates_Model.VenueMatch" StoreEntitySet="Matches">
+      <EndProperty Name="Venue">
+        <ScalarProperty Name="ID" ColumnName="Venue_ID" />
+      </EndProperty>
+      <EndProperty Name="Match">
+        <ScalarProperty Name="ID" ColumnName="ID" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="MatchMatchPlayer" TypeName="GAA_Templates_Model.MatchMatchPlayer" StoreEntitySet="MatchPlayers">
+      <EndProperty Name="Match">
+        <ScalarProperty Name="ID" ColumnName="Match_ID" />
+      </EndProperty>
+      <EndProperty Name="MatchPlayer">
+        <ScalarProperty Name="ID" ColumnName="ID" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="MatchPlayerTeam" TypeName="GAA_Templates_Model.MatchPlayerTeam" StoreEntitySet="MatchPlayers">
+      <EndProperty Name="Team">
+        <ScalarProperty Name="ID" ColumnName="Teams_ID" />
+      </EndProperty>
+      <EndProperty Name="MatchPlayer">
+        <ScalarProperty Name="ID" ColumnName="ID" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="PlayerMatchPlayer" TypeName="GAA_Templates_Model.PlayerMatchPlayer" StoreEntitySet="MatchPlayers">
+      <EndProperty Name="Player">
+        <ScalarProperty Name="ID" ColumnName="Player_ID" />
+      </EndProperty>
+      <EndProperty Name="MatchPlayer">
+        <ScalarProperty Name="ID" ColumnName="ID" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
   </edmx:Runtime>
   <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
@@ -87,6 +594,7 @@
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
         <DesignerProperty Name="EnablePluralization" Value="True" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
       </DesignerInfoPropertySet>
     </edmx:Options>
     <!-- Diagram content (shape and connector positions) -->
