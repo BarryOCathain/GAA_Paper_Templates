@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 10/24/2015 12:55:23
+-- Date Created: 10/24/2015 13:54:13
 -- Generated from EDMX file: C:\TortoiseGit\GAA_Paper_Templates\GAA_Paper_Templates\GAA_Paper_Templates\GAA_Templates_Model.edmx
 -- --------------------------------------------------
 
@@ -38,9 +38,6 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_MatchMatchPlayer]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[MatchPlayers] DROP CONSTRAINT [FK_MatchMatchPlayer];
 GO
-IF OBJECT_ID(N'[dbo].[FK_MatchPlayerTeam]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[MatchPlayers] DROP CONSTRAINT [FK_MatchPlayerTeam];
-GO
 IF OBJECT_ID(N'[dbo].[FK_PlayerMatchPlayer]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[MatchPlayers] DROP CONSTRAINT [FK_PlayerMatchPlayer];
 GO
@@ -61,6 +58,9 @@ IF OBJECT_ID(N'[dbo].[FK_TeamMatch]', 'F') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[FK_TeamMatch1]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Matches] DROP CONSTRAINT [FK_TeamMatch1];
+GO
+IF OBJECT_ID(N'[dbo].[FK_CountyCompetition]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Competitions] DROP CONSTRAINT [FK_CountyCompetition];
 GO
 IF OBJECT_ID(N'[dbo].[FK_CountyTeam_inherits_Team]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Teams_CountyTeam] DROP CONSTRAINT [FK_CountyTeam_inherits_Team];
@@ -172,8 +172,12 @@ CREATE TABLE [dbo].[MatchPlayers] (
     [MinuteOn] int  NOT NULL,
     [MinuteOff] int  NOT NULL,
     [PlayerNumber] int  NOT NULL,
+    [SubbedFor] int  NOT NULL,
+    [YellowCards] int  NOT NULL,
+    [BlackCards] int  NOT NULL,
+    [RedCards] int  NOT NULL,
+    [IsSentOff] bit  NOT NULL,
     [Match_ID] int  NOT NULL,
-    [Teams_ID] int  NOT NULL,
     [Player_ID] int  NOT NULL
 );
 GO
@@ -392,21 +396,6 @@ GO
 CREATE INDEX [IX_FK_MatchMatchPlayer]
 ON [dbo].[MatchPlayers]
     ([Match_ID]);
-GO
-
--- Creating foreign key on [Teams_ID] in table 'MatchPlayers'
-ALTER TABLE [dbo].[MatchPlayers]
-ADD CONSTRAINT [FK_MatchPlayerTeam]
-    FOREIGN KEY ([Teams_ID])
-    REFERENCES [dbo].[Teams]
-        ([ID])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
-
--- Creating non-clustered index for FOREIGN KEY 'FK_MatchPlayerTeam'
-CREATE INDEX [IX_FK_MatchPlayerTeam]
-ON [dbo].[MatchPlayers]
-    ([Teams_ID]);
 GO
 
 -- Creating foreign key on [Player_ID] in table 'MatchPlayers'

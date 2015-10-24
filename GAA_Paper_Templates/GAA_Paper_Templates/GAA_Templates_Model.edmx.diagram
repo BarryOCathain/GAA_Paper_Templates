@@ -23,7 +23,6 @@
         <AssociationConnector Association="GAA_Templates_Model.VenueMatch" />
         <EntityTypeShape EntityType="GAA_Templates_Model.MatchPlayer" Width="1.5" PointX="5.625" PointY="3.375" />
         <AssociationConnector Association="GAA_Templates_Model.MatchMatchPlayer" />
-        <AssociationConnector Association="GAA_Templates_Model.MatchPlayerTeam" />
         <AssociationConnector Association="GAA_Templates_Model.PlayerMatchPlayer" />
         <EntityTypeShape EntityType="GAA_Templates_Model.Competition" Width="2" PointX="10" PointY="2.75" />
         <EntityTypeShape EntityType="GAA_Templates_Model.CompetitionMatchType" Width="2" PointX="10" PointY="0.5" />

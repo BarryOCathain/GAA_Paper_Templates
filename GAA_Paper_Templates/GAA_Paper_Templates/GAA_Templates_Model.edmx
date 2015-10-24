@@ -45,10 +45,6 @@
       <End Role="Match" EntitySet="Matches" />
       <End Role="MatchPlayer" EntitySet="MatchPlayers" />
     </AssociationSet>
-    <AssociationSet Name="MatchPlayerTeam" Association="GAA_Templates_Model.Store.MatchPlayerTeam">
-      <End Role="MatchPlayer" EntitySet="MatchPlayers" />
-      <End Role="Team" EntitySet="Teams" />
-    </AssociationSet>
     <AssociationSet Name="PlayerMatchPlayer" Association="GAA_Templates_Model.Store.PlayerMatchPlayer">
       <End Role="Player" EntitySet="Players" />
       <End Role="MatchPlayer" EntitySet="MatchPlayers" />
@@ -153,8 +149,12 @@
     <Property Name="MinuteOn" Type="int" Nullable="false" />
     <Property Name="MinuteOff" Type="int" Nullable="false" />
     <Property Name="PlayerNumber" Type="int" Nullable="false" />
+    <Property Name="SubbedFor" Type="int" Nullable="false" />
+    <Property Name="YellowCards" Type="int" Nullable="false" />
+    <Property Name="BlackCards" Type="int" Nullable="false" />
+    <Property Name="RedCards" Type="int" Nullable="false" />
+    <Property Name="IsSentOff" Type="bit" Nullable="false" />
     <Property Name="Match_ID" Type="int" Nullable="false" />
-    <Property Name="Teams_ID" Type="int" Nullable="false" />
     <Property Name="Player_ID" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Competitions">
@@ -276,18 +276,6 @@
       </Principal>
       <Dependent Role="MatchPlayer">
         <PropertyRef Name="Match_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="MatchPlayerTeam">
-    <End Role="MatchPlayer" Type="GAA_Templates_Model.Store.MatchPlayers" Multiplicity="*" />
-    <End Role="Team" Type="GAA_Templates_Model.Store.Teams" Multiplicity="1" />
-    <ReferentialConstraint>
-      <Principal Role="Team">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="MatchPlayer">
-        <PropertyRef Name="Teams_ID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -454,10 +442,6 @@
             <End Role="Match" EntitySet="Matches" />
             <End Role="MatchPlayer" EntitySet="MatchPlayers" />
           </AssociationSet>
-          <AssociationSet Name="MatchPlayerTeam" Association="GAA_Templates_Model.MatchPlayerTeam">
-            <End Role="MatchPlayer" EntitySet="MatchPlayers" />
-            <End Role="Team" EntitySet="Teams" />
-          </AssociationSet>
           <AssociationSet Name="PlayerMatchPlayer" Association="GAA_Templates_Model.PlayerMatchPlayer">
             <End Role="Player" EntitySet="Players" />
             <End Role="MatchPlayer" EntitySet="MatchPlayers" />
@@ -510,7 +494,6 @@
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" Nullable="false" />
-          <NavigationProperty Name="MatchPlayer" Relationship="GAA_Templates_Model.MatchPlayerTeam" FromRole="Team" ToRole="MatchPlayer" />
           <NavigationProperty Name="Matches" Relationship="GAA_Templates_Model.TeamMatch" FromRole="Team" ToRole="Match" />
           <NavigationProperty Name="Matches1" Relationship="GAA_Templates_Model.TeamMatch1" FromRole="Team" ToRole="Match" />
         </EntityType>
@@ -590,20 +573,20 @@
           <Property Name="Points" Type="Int32" Nullable="false" />
           <Property Name="Frees" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Match" Relationship="GAA_Templates_Model.MatchMatchPlayer" FromRole="MatchPlayer" ToRole="Match" />
-          <NavigationProperty Name="Teams" Relationship="GAA_Templates_Model.MatchPlayerTeam" FromRole="MatchPlayer" ToRole="Team" />
           <NavigationProperty Name="Player" Relationship="GAA_Templates_Model.PlayerMatchPlayer" FromRole="MatchPlayer" ToRole="Player" />
           <Property Name="IsSubbed" Type="Boolean" Nullable="false" />
           <Property Name="MinuteOn" Type="Int32" Nullable="false" />
           <Property Name="MinuteOff" Type="Int32" Nullable="false" />
           <Property Name="PlayerNumber" Type="Int32" Nullable="false" />
+          <Property Name="SubbedFor" Type="Int32" Nullable="false" />
+          <Property Name="YellowCards" Type="Int32" Nullable="false" />
+          <Property Name="BlackCards" Type="Int32" Nullable="false" />
+          <Property Name="RedCards" Type="Int32" Nullable="false" />
+          <Property Name="IsSentOff" Type="Boolean" Nullable="false" />
         </EntityType>
         <Association Name="MatchMatchPlayer">
           <End Type="GAA_Templates_Model.Match" Role="Match" Multiplicity="1" />
           <End Type="GAA_Templates_Model.MatchPlayer" Role="MatchPlayer" Multiplicity="*" />
-        </Association>
-        <Association Name="MatchPlayerTeam">
-          <End Type="GAA_Templates_Model.MatchPlayer" Role="MatchPlayer" Multiplicity="*" />
-          <End Type="GAA_Templates_Model.Team" Role="Team" Multiplicity="1" />
         </Association>
         <Association Name="PlayerMatchPlayer">
           <End Type="GAA_Templates_Model.Player" Role="Player" Multiplicity="1" />
@@ -728,6 +711,11 @@
           <ScalarProperty Name="MinuteOn" ColumnName="MinuteOn" />
           <ScalarProperty Name="MinuteOff" ColumnName="MinuteOff" />
           <ScalarProperty Name="PlayerNumber" ColumnName="PlayerNumber" />
+          <ScalarProperty Name="SubbedFor" ColumnName="SubbedFor" />
+          <ScalarProperty Name="YellowCards" ColumnName="YellowCards" />
+          <ScalarProperty Name="BlackCards" ColumnName="BlackCards" />
+          <ScalarProperty Name="RedCards" ColumnName="RedCards" />
+          <ScalarProperty Name="IsSentOff" ColumnName="IsSentOff" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -801,14 +789,6 @@
     <AssociationSetMapping Name="MatchMatchPlayer" TypeName="GAA_Templates_Model.MatchMatchPlayer" StoreEntitySet="MatchPlayers">
       <EndProperty Name="Match">
         <ScalarProperty Name="ID" ColumnName="Match_ID" />
-      </EndProperty>
-      <EndProperty Name="MatchPlayer">
-        <ScalarProperty Name="ID" ColumnName="ID" />
-      </EndProperty>
-    </AssociationSetMapping>
-    <AssociationSetMapping Name="MatchPlayerTeam" TypeName="GAA_Templates_Model.MatchPlayerTeam" StoreEntitySet="MatchPlayers">
-      <EndProperty Name="Team">
-        <ScalarProperty Name="ID" ColumnName="Teams_ID" />
       </EndProperty>
       <EndProperty Name="MatchPlayer">
         <ScalarProperty Name="ID" ColumnName="ID" />

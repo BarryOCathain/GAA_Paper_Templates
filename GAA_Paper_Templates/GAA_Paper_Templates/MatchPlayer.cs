@@ -23,9 +23,13 @@ namespace GAA_Paper_Templates
         public int MinuteOn { get; set; }
         public int MinuteOff { get; set; }
         public int PlayerNumber { get; set; }
+        public int SubbedFor { get; set; }
+        public int YellowCards { get; set; }
+        public int BlackCards { get; set; }
+        public int RedCards { get; set; }
+        public bool IsSentOff { get; set; }
     
         public virtual Match Match { get; set; }
-        public virtual Team Teams { get; set; }
         public virtual Player Player { get; set; }
     }
 }
