@@ -13,5 +13,13 @@ namespace GAA_Paper_Templates.Common
             County,
             Club
         }
+
+        public enum Provinces
+        {
+            Connacht,
+            Leinster,
+            Munster,
+            Ulster
+        }
     }
 }

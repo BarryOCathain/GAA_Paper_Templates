@@ -113,6 +113,7 @@
     </Key>
     <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Province" Type="nvarchar(max)" Nullable="false" />
     <Property Name="CountyTeams_ID" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Players">
@@ -501,6 +502,7 @@
           <NavigationProperty Name="CountyTeams" Relationship="GAA_Templates_Model.CountyCountyTeam" FromRole="County" ToRole="CountyTeam" />
           <NavigationProperty Name="ClubTeams" Relationship="GAA_Templates_Model.ClubTeamCounty" FromRole="County" ToRole="ClubTeam" />
           <NavigationProperty Name="Venues" Relationship="GAA_Templates_Model.CountyVenue" FromRole="County" ToRole="Venue" />
+          <Property Name="Province" Type="String" Nullable="false" />
         </EntityType>
         <EntityType Name="CountyTeam" BaseType="GAA_Templates_Model.Team">
           <NavigationProperty Name="County" Relationship="GAA_Templates_Model.CountyCountyTeam" FromRole="CountyTeam" ToRole="County" />
@@ -664,6 +666,7 @@
         <MappingFragment StoreEntitySet="Counties">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Province" ColumnName="Province" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
