@@ -77,6 +77,10 @@
       <End Role="Team" EntitySet="Teams" />
       <End Role="Match" EntitySet="Matches" />
     </AssociationSet>
+    <AssociationSet Name="CountyCompetition" Association="GAA_Templates_Model.Store.CountyCompetition">
+      <End Role="County" EntitySet="Counties" />
+      <End Role="Competition" EntitySet="Competitions" />
+    </AssociationSet>
     <AssociationSet Name="FK_CountyTeam_inherits_Team" Association="GAA_Templates_Model.Store.FK_CountyTeam_inherits_Team">
       <End Role="Team" EntitySet="Teams" />
       <End Role="CountyTeam" EntitySet="Teams_CountyTeam" />
@@ -161,6 +165,7 @@
     <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
     <Property Name="StartDate" Type="datetime" Nullable="false" />
     <Property Name="EndDate" Type="datetime" Nullable="false" />
+    <Property Name="County_ID" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="CompetitionMatchTypes">
     <Key>
@@ -346,6 +351,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="CountyCompetition">
+    <End Role="County" Type="GAA_Templates_Model.Store.Counties" Multiplicity="1" />
+    <End Role="Competition" Type="GAA_Templates_Model.Store.Competitions" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="County">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Competition">
+        <PropertyRef Name="County_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_CompetitionMatchTypeCompetition_CompetitionMatchType">
     <End Role="CompetitionMatchType" Type="GAA_Templates_Model.Store.CompetitionMatchTypes" Multiplicity="1" />
     <End Role="CompetitionMatchTypeCompetition" Type="GAA_Templates_Model.Store.CompetitionMatchTypeCompetition" Multiplicity="*" />
@@ -467,6 +484,10 @@
             <End Role="Team" EntitySet="Teams" />
             <End Role="Match" EntitySet="Matches" />
           </AssociationSet>
+          <AssociationSet Name="CountyCompetition" Association="GAA_Templates_Model.CountyCompetition">
+            <End Role="County" EntitySet="Counties" />
+            <End Role="Competition" EntitySet="Competitions" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Match">
           <Key>
@@ -503,6 +524,7 @@
           <NavigationProperty Name="ClubTeams" Relationship="GAA_Templates_Model.ClubTeamCounty" FromRole="County" ToRole="ClubTeam" />
           <NavigationProperty Name="Venues" Relationship="GAA_Templates_Model.CountyVenue" FromRole="County" ToRole="Venue" />
           <Property Name="Province" Type="String" Nullable="false" />
+          <NavigationProperty Name="Competitions" Relationship="GAA_Templates_Model.CountyCompetition" FromRole="County" ToRole="Competition" />
         </EntityType>
         <EntityType Name="CountyTeam" BaseType="GAA_Templates_Model.Team">
           <NavigationProperty Name="County" Relationship="GAA_Templates_Model.CountyCountyTeam" FromRole="CountyTeam" ToRole="County" />
@@ -597,6 +619,7 @@
           <NavigationProperty Name="Match" Relationship="GAA_Templates_Model.MatchCompetition" FromRole="Competition" ToRole="Match" />
           <Property Name="StartDate" Type="DateTime" Nullable="false" />
           <Property Name="EndDate" Type="DateTime" Nullable="false" />
+          <NavigationProperty Name="County" Relationship="GAA_Templates_Model.CountyCompetition" FromRole="Competition" ToRole="County" />
         </EntityType>
         <EntityType Name="CompetitionMatchType">
           <Key>
@@ -626,6 +649,10 @@
         <Association Name="TeamMatch1">
           <End Type="GAA_Templates_Model.Team" Role="Team" Multiplicity="1" />
           <End Type="GAA_Templates_Model.Match" Role="Match" Multiplicity="*" />
+        </Association>
+        <Association Name="CountyCompetition">
+          <End Type="GAA_Templates_Model.County" Role="County" Multiplicity="1" />
+          <End Type="GAA_Templates_Model.Competition" Role="Competition" Multiplicity="*" />
         </Association>
       </Schema>
     </edmx:ConceptualModels>
@@ -833,6 +860,14 @@
         <ScalarProperty Name="ID" ColumnName="AwayTeam_ID" />
       </EndProperty>
       <EndProperty Name="Match">
+        <ScalarProperty Name="ID" ColumnName="ID" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="CountyCompetition" TypeName="GAA_Templates_Model.CountyCompetition" StoreEntitySet="Competitions">
+      <EndProperty Name="County">
+        <ScalarProperty Name="ID" ColumnName="County_ID" />
+      </EndProperty>
+      <EndProperty Name="Competition">
         <ScalarProperty Name="ID" ColumnName="ID" />
       </EndProperty>
     </AssociationSetMapping>

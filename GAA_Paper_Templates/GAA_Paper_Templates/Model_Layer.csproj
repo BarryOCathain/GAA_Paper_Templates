@@ -112,9 +112,11 @@
     <Compile Include="Interfaces\ITeamView.cs" />
     <Compile Include="Interfaces\IVenueView.cs" />
     <Compile Include="Views\CompetitionMatchTypeView.cs" />
+    <Compile Include="Views\CompetitionView.cs" />
     <Compile Include="Views\CountyView.cs" />
     <Compile Include="Interfaces\ICountyView.cs" />
     <Compile Include="Interfaces\ICompetitionMatchTypeView.cs" />
+    <Compile Include="Interfaces\ICompetitionView.cs" />
     <Compile Include="Views\MatchView.cs" />
     <Compile Include="Views\PlayerView.cs" />
     <Compile Include="Views\TeamView.cs" />

@@ -30,5 +30,6 @@ namespace GAA_Paper_Templates
         public virtual ICollection<CompetitionMatchType> CompetitionMatchType { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Match> Match { get; set; }
+        public virtual County County { get; set; }
     }
 }

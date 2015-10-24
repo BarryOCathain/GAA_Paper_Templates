@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 10/24/2015 03:03:02
+-- Date Created: 10/24/2015 12:55:23
 -- Generated from EDMX file: C:\TortoiseGit\GAA_Paper_Templates\GAA_Paper_Templates\GAA_Paper_Templates\GAA_Templates_Model.edmx
 -- --------------------------------------------------
 
@@ -183,7 +183,8 @@ CREATE TABLE [dbo].[Competitions] (
     [ID] int IDENTITY(1,1) NOT NULL,
     [Name] nvarchar(max)  NOT NULL,
     [StartDate] datetime  NOT NULL,
-    [EndDate] datetime  NOT NULL
+    [EndDate] datetime  NOT NULL,
+    [County_ID] int  NOT NULL
 );
 GO
 
@@ -505,6 +506,21 @@ GO
 CREATE INDEX [IX_FK_TeamMatch1]
 ON [dbo].[Matches]
     ([AwayTeam_ID]);
+GO
+
+-- Creating foreign key on [County_ID] in table 'Competitions'
+ALTER TABLE [dbo].[Competitions]
+ADD CONSTRAINT [FK_CountyCompetition]
+    FOREIGN KEY ([County_ID])
+    REFERENCES [dbo].[Counties]
+        ([ID])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_CountyCompetition'
+CREATE INDEX [IX_FK_CountyCompetition]
+ON [dbo].[Competitions]
+    ([County_ID]);
 GO
 
 -- Creating foreign key on [ID] in table 'Teams_CountyTeam'

@@ -32,6 +32,7 @@
         <AssociationConnector Association="GAA_Templates_Model.MatchCompetition" />
         <AssociationConnector Association="GAA_Templates_Model.TeamMatch" />
         <AssociationConnector Association="GAA_Templates_Model.TeamMatch1" />
+        <AssociationConnector Association="GAA_Templates_Model.CountyCompetition" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

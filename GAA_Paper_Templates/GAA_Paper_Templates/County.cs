@@ -19,6 +19,7 @@ namespace GAA_Paper_Templates
         {
             this.ClubTeams = new HashSet<ClubTeam>();
             this.Venues = new HashSet<Venue>();
+            this.Competitions = new HashSet<Competition>();
         }
     
         public int ID { get; set; }
@@ -30,5 +31,7 @@ namespace GAA_Paper_Templates
         public virtual ICollection<ClubTeam> ClubTeams { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Venue> Venues { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Competition> Competitions { get; set; }
     }
 }
