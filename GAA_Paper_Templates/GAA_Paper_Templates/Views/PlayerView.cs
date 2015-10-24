@@ -156,7 +156,7 @@ namespace GAA_Paper_Templates.Views
                 .ToList();
         }
 
-        public List<Player> getPlayersByFirstName(string firstName)
+        public List<Player> GetPlayersByFirstName(string firstName)
         {
             return context.Players
                 .Where(p => p.FirstName == firstName)

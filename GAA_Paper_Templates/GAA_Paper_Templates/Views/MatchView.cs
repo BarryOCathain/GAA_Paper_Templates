@@ -14,7 +14,7 @@ namespace GAA_Paper_Templates.Views
             context = _context;
         }
 
-        public Match AddMatch(DateTime matchDate, TimeSpan time, Venue venue, CompetitionMatchType matchType,
+        public Match CreateMatch(DateTime matchDate, TimeSpan time, Venue venue, CompetitionMatchType matchType,
             Competition competition, Team homeTeam, Team awayTeam)
         {
             if (homeTeam.GetType() == awayTeam.GetType())
@@ -110,6 +110,13 @@ namespace GAA_Paper_Templates.Views
         {
             return context.Matches
                 .Where(m => m.Venue == venue)
+                .ToList();
+        }
+
+        public List<Match> GetMatchesByTeam(Team team)
+        {
+            return context.Matches
+                .Where(m => m.HomeTeam == team || m.AwayTeam == team)
                 .ToList();
         }
     }

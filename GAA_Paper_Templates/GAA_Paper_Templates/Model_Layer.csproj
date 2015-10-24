@@ -63,6 +63,7 @@
     <Compile Include="ClubTeam.cs">
       <DependentUpon>GAA_Templates_Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Common\Enums.cs" />
     <Compile Include="Competition.cs">
       <DependentUpon>GAA_Templates_Model.tt</DependentUpon>
     </Compile>
@@ -107,9 +108,13 @@
     <Compile Include="Venue.cs">
       <DependentUpon>GAA_Templates_Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Views\IMatchView.cs" />
-    <Compile Include="Interfaces\MatchView.cs" />
+    <Compile Include="Interfaces\IMatchView.cs" />
+    <Compile Include="Interfaces\ITeamView.cs" />
+    <Compile Include="Interfaces\IVenueView.cs" />
+    <Compile Include="Views\MatchView.cs" />
     <Compile Include="Views\PlayerView.cs" />
+    <Compile Include="Views\TeamView.cs" />
+    <Compile Include="Views\VenueView.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
