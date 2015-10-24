@@ -95,8 +95,8 @@
     <Property Name="IsObsolete" Type="bit" Nullable="false" />
     <Property Name="MatchTime" Type="time" Nullable="false" />
     <Property Name="Venue_ID" Type="int" Nullable="false" />
-    <Property Name="CompetitionMatchTypes_ID" Type="int" Nullable="true" />
-    <Property Name="Competitions_ID" Type="int" Nullable="false" />
+    <Property Name="CompetitionMatchType_ID" Type="int" Nullable="true" />
+    <Property Name="Competition_ID" Type="int" Nullable="false" />
     <Property Name="HomeTeam_ID" Type="int" Nullable="false" />
     <Property Name="AwayTeam_ID" Type="int" Nullable="false" />
   </EntityType>
@@ -305,7 +305,7 @@
         <PropertyRef Name="ID" />
       </Principal>
       <Dependent Role="Match">
-        <PropertyRef Name="CompetitionMatchTypes_ID" />
+        <PropertyRef Name="CompetitionMatchType_ID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -317,7 +317,7 @@
         <PropertyRef Name="ID" />
       </Principal>
       <Dependent Role="Match">
-        <PropertyRef Name="Competitions_ID" />
+        <PropertyRef Name="Competition_ID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -477,8 +477,8 @@
           <NavigationProperty Name="Venue" Relationship="GAA_Templates_Model.VenueMatch" FromRole="Match" ToRole="Venue" />
           <Property Name="MatchTime" Type="Time" Nullable="false" />
           <NavigationProperty Name="MatchPlayers" Relationship="GAA_Templates_Model.MatchMatchPlayer" FromRole="Match" ToRole="MatchPlayer" />
-          <NavigationProperty Name="CompetitionMatchTypes" Relationship="GAA_Templates_Model.MatchCompetitionMatchType" FromRole="Match" ToRole="CompetitionMatchType" />
-          <NavigationProperty Name="Competitions" Relationship="GAA_Templates_Model.MatchCompetition" FromRole="Match" ToRole="Competition" />
+          <NavigationProperty Name="CompetitionMatchType" Relationship="GAA_Templates_Model.MatchCompetitionMatchType" FromRole="Match" ToRole="CompetitionMatchType" />
+          <NavigationProperty Name="Competition" Relationship="GAA_Templates_Model.MatchCompetition" FromRole="Match" ToRole="Competition" />
           <NavigationProperty Name="HomeTeam" Relationship="GAA_Templates_Model.TeamMatch" FromRole="Match" ToRole="Team" />
           <NavigationProperty Name="AwayTeam" Relationship="GAA_Templates_Model.TeamMatch1" FromRole="Match" ToRole="Team" />
         </EntityType>
@@ -794,12 +794,12 @@
     </AssociationSetMapping>
     <AssociationSetMapping Name="MatchCompetitionMatchType" TypeName="GAA_Templates_Model.MatchCompetitionMatchType" StoreEntitySet="Matches">
       <EndProperty Name="CompetitionMatchType">
-        <ScalarProperty Name="ID" ColumnName="CompetitionMatchTypes_ID" />
+        <ScalarProperty Name="ID" ColumnName="CompetitionMatchType_ID" />
       </EndProperty>
       <EndProperty Name="Match">
         <ScalarProperty Name="ID" ColumnName="ID" />
       </EndProperty>
-      <Condition ColumnName="CompetitionMatchTypes_ID" IsNull="false" />
+      <Condition ColumnName="CompetitionMatchType_ID" IsNull="false" />
     </AssociationSetMapping>
     <AssociationSetMapping Name="CompetitionMatchTypeCompetition" TypeName="GAA_Templates_Model.CompetitionMatchTypeCompetition" StoreEntitySet="CompetitionMatchTypeCompetition">
       <EndProperty Name="CompetitionMatchType">
@@ -811,7 +811,7 @@
     </AssociationSetMapping>
     <AssociationSetMapping Name="MatchCompetition" TypeName="GAA_Templates_Model.MatchCompetition" StoreEntitySet="Matches">
       <EndProperty Name="Competition">
-        <ScalarProperty Name="ID" ColumnName="Competitions_ID" />
+        <ScalarProperty Name="ID" ColumnName="Competition_ID" />
       </EndProperty>
       <EndProperty Name="Match">
         <ScalarProperty Name="ID" ColumnName="ID" />

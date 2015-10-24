@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 10/23/2015 23:10:08
+-- Date Created: 10/24/2015 00:57:29
 -- Generated from EDMX file: C:\TortoiseGit\GAA_Paper_Templates\GAA_Paper_Templates\GAA_Paper_Templates\GAA_Templates_Model.edmx
 -- --------------------------------------------------
 
@@ -118,8 +118,8 @@ CREATE TABLE [dbo].[Matches] (
     [IsObsolete] bit  NOT NULL,
     [MatchTime] time  NOT NULL,
     [Venue_ID] int  NOT NULL,
-    [CompetitionMatchTypes_ID] int  NULL,
-    [Competitions_ID] int  NOT NULL,
+    [CompetitionMatchType_ID] int  NULL,
+    [Competition_ID] int  NOT NULL,
     [HomeTeam_ID] int  NOT NULL,
     [AwayTeam_ID] int  NOT NULL
 );
@@ -422,10 +422,10 @@ ON [dbo].[MatchPlayers]
     ([Player_ID]);
 GO
 
--- Creating foreign key on [CompetitionMatchTypes_ID] in table 'Matches'
+-- Creating foreign key on [CompetitionMatchType_ID] in table 'Matches'
 ALTER TABLE [dbo].[Matches]
 ADD CONSTRAINT [FK_MatchCompetitionMatchType]
-    FOREIGN KEY ([CompetitionMatchTypes_ID])
+    FOREIGN KEY ([CompetitionMatchType_ID])
     REFERENCES [dbo].[CompetitionMatchTypes]
         ([ID])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
@@ -434,7 +434,7 @@ GO
 -- Creating non-clustered index for FOREIGN KEY 'FK_MatchCompetitionMatchType'
 CREATE INDEX [IX_FK_MatchCompetitionMatchType]
 ON [dbo].[Matches]
-    ([CompetitionMatchTypes_ID]);
+    ([CompetitionMatchType_ID]);
 GO
 
 -- Creating foreign key on [CompetitionMatchType_ID] in table 'CompetitionMatchTypeCompetition'
@@ -461,10 +461,10 @@ ON [dbo].[CompetitionMatchTypeCompetition]
     ([Competitions_ID]);
 GO
 
--- Creating foreign key on [Competitions_ID] in table 'Matches'
+-- Creating foreign key on [Competition_ID] in table 'Matches'
 ALTER TABLE [dbo].[Matches]
 ADD CONSTRAINT [FK_MatchCompetition]
-    FOREIGN KEY ([Competitions_ID])
+    FOREIGN KEY ([Competition_ID])
     REFERENCES [dbo].[Competitions]
         ([ID])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
@@ -473,7 +473,7 @@ GO
 -- Creating non-clustered index for FOREIGN KEY 'FK_MatchCompetition'
 CREATE INDEX [IX_FK_MatchCompetition]
 ON [dbo].[Matches]
-    ([Competitions_ID]);
+    ([Competition_ID]);
 GO
 
 -- Creating foreign key on [HomeTeam_ID] in table 'Matches'

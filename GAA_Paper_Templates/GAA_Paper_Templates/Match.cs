@@ -28,8 +28,8 @@ namespace GAA_Paper_Templates
         public virtual Venue Venue { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MatchPlayer> MatchPlayers { get; set; }
-        public virtual CompetitionMatchType CompetitionMatchTypes { get; set; }
-        public virtual Competition Competitions { get; set; }
+        public virtual CompetitionMatchType CompetitionMatchType { get; set; }
+        public virtual Competition Competition { get; set; }
         public virtual Team HomeTeam { get; set; }
         public virtual Team AwayTeam { get; set; }
     }
