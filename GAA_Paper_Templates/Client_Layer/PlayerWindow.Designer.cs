@@ -28,14 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.clubComboBox = new System.Windows.Forms.ComboBox();
-            this.teamsClubTeamBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.gAA_TemplatesDataSet = new Client_Layer.GAA_TemplatesDataSet();
             this.countyComboBox = new System.Windows.Forms.ComboBox();
-            this.countiesBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.teams_ClubTeamTableAdapter = new Client_Layer.GAA_TemplatesDataSetTableAdapters.Teams_ClubTeamTableAdapter();
-            this.countiesTableAdapter = new Client_Layer.GAA_TemplatesDataSetTableAdapters.CountiesTableAdapter();
             this.countyPlayerCheckBox = new System.Windows.Forms.CheckBox();
             this.countyLabel = new System.Windows.Forms.Label();
             this.clubLabel = new System.Windows.Forms.Label();
@@ -48,15 +42,10 @@
             this.newCountyButton = new System.Windows.Forms.Button();
             this.newClubButton = new System.Windows.Forms.Button();
             this.obsoleteCheckBox = new System.Windows.Forms.CheckBox();
-            ((System.ComponentModel.ISupportInitialize)(this.teamsClubTeamBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gAA_TemplatesDataSet)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.countiesBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // clubComboBox
             // 
-            this.clubComboBox.DataSource = this.teamsClubTeamBindingSource;
-            this.clubComboBox.DisplayMember = "Name";
             this.clubComboBox.FormattingEnabled = true;
             this.clubComboBox.Location = new System.Drawing.Point(81, 85);
             this.clubComboBox.Name = "clubComboBox";
@@ -64,39 +53,15 @@
             this.clubComboBox.TabIndex = 3;
             this.clubComboBox.ValueMember = "ID";
             // 
-            // teamsClubTeamBindingSource
-            // 
-            this.teamsClubTeamBindingSource.DataMember = "Teams_ClubTeam";
-            this.teamsClubTeamBindingSource.DataSource = this.gAA_TemplatesDataSet;
-            // 
-            // gAA_TemplatesDataSet
-            // 
-            this.gAA_TemplatesDataSet.DataSetName = "GAA_TemplatesDataSet";
-            this.gAA_TemplatesDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
             // countyComboBox
             // 
-            this.countyComboBox.DataSource = this.countiesBindingSource;
-            this.countyComboBox.DisplayMember = "Name";
             this.countyComboBox.FormattingEnabled = true;
             this.countyComboBox.Location = new System.Drawing.Point(81, 58);
             this.countyComboBox.Name = "countyComboBox";
             this.countyComboBox.Size = new System.Drawing.Size(121, 21);
             this.countyComboBox.TabIndex = 2;
             this.countyComboBox.ValueMember = "ID";
-            // 
-            // countiesBindingSource
-            // 
-            this.countiesBindingSource.DataMember = "Counties";
-            this.countiesBindingSource.DataSource = this.gAA_TemplatesDataSet;
-            // 
-            // teams_ClubTeamTableAdapter
-            // 
-            this.teams_ClubTeamTableAdapter.ClearBeforeFill = true;
-            // 
-            // countiesTableAdapter
-            // 
-            this.countiesTableAdapter.ClearBeforeFill = true;
+            this.countyComboBox.SelectedIndexChanged += new System.EventHandler(this.countyComboBox_SelectedIndexChanged);
             // 
             // countyPlayerCheckBox
             // 
@@ -233,9 +198,6 @@
             this.Name = "PlayerWindow";
             this.Text = "Player";
             this.Load += new System.EventHandler(this.PlayerWindow_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.teamsClubTeamBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gAA_TemplatesDataSet)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.countiesBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -245,11 +207,6 @@
 
         private System.Windows.Forms.ComboBox clubComboBox;
         private System.Windows.Forms.ComboBox countyComboBox;
-        private GAA_TemplatesDataSet gAA_TemplatesDataSet;
-        private System.Windows.Forms.BindingSource teamsClubTeamBindingSource;
-        private GAA_TemplatesDataSetTableAdapters.Teams_ClubTeamTableAdapter teams_ClubTeamTableAdapter;
-        private System.Windows.Forms.BindingSource countiesBindingSource;
-        private GAA_TemplatesDataSetTableAdapters.CountiesTableAdapter countiesTableAdapter;
         private System.Windows.Forms.CheckBox countyPlayerCheckBox;
         private System.Windows.Forms.Label countyLabel;
         private System.Windows.Forms.Label clubLabel;

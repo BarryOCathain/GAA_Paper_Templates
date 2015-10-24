@@ -1,11 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using GAA_Paper_Templates;
 using GAA_Paper_Templates.Common;
@@ -36,18 +31,27 @@ namespace Client_Layer
 
         private void PlayerWindow_Load(object sender, EventArgs e)
         {
+            refreshComboBoxes();
+        }
+
+        private void refreshComboBoxes()
+        {
             refreshCounties();
-            refreshClubTeams((int)this.countyComboBox.SelectedValue);
+            refreshClubTeams();
         }
 
         private void refreshCounties()
         {
-            this.countiesTableAdapter.Fill(this.gAA_TemplatesDataSet.Counties);
+            this.countyComboBox.DataSource = GetAllCounties();
+            this.countyComboBox.ValueMember = "ID";
+            this.countyComboBox.DisplayMember = "Name";
         }
 
-        private void refreshClubTeams(int cty)
+        private void refreshClubTeams()
         {
-            this.teams_ClubTeamTableAdapter.FillByCounty(this.gAA_TemplatesDataSet.Teams_ClubTeam, cty);
+            this.clubComboBox.DataSource = GetClubsByCounty((County)this.countyComboBox.SelectedItem);
+            this.clubComboBox.ValueMember = "ID";
+            this.clubComboBox.DisplayMember = "Name";
         }
 
         private void loadTestData()
@@ -56,10 +60,6 @@ namespace Client_Layer
 
             //CreateTeam(Enums.Classification.Club, "Austin Stacks", "Kerry");          
         }
-
-
-
-
 
         private void closeButton_Click(object sender, EventArgs e)
         {
@@ -143,7 +143,10 @@ namespace Client_Layer
 
         public List<County> GetAllCounties()
         {
-            throw new NotImplementedException();
+            using (countyViewContext)
+            {
+                return countyViewContext.GetAllCounties();
+            }
         }
 
         public List<County> GetCountiesByProvince(Enums.Provinces province)
@@ -194,7 +197,10 @@ namespace Client_Layer
 
         public List<ClubTeam> GetClubsByCounty(County county)
         {
-            throw new NotImplementedException();
+            using (teamViewContext)
+            {
+                return teamViewContext.GetClubsByCounty(county);
+            }
         }
 
         public Team UpdateTeam(Team team, string name)
@@ -255,7 +261,13 @@ namespace Client_Layer
 
         private void newCountyButton_Click(object sender, EventArgs e)
         {
-
+            using (CountyWindow cw = new CountyWindow())
+            {
+                if (cw.ShowDialog() == DialogResult.OK)
+                {
+                    refreshComboBoxes();
+                }
+            }
         }
 
         private void newClubButton_Click(object sender, EventArgs e)
@@ -322,6 +334,12 @@ namespace Client_Layer
             }
 
             return isValid;
+        }
+
+        private void countyComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            this.clubComboBox.SelectedIndex = -1;
+            refreshClubTeams();
         }
     }
 }

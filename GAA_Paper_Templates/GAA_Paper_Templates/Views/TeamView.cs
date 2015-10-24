@@ -105,16 +105,15 @@ namespace GAA_Paper_Templates.Views
         {
             List<ClubTeam> clubs = new List<ClubTeam>();
 
-            List<Team> tempClubs = context.Teams
-                .Where(t => t.GetType() == typeof(ClubTeam))
-                .ToList();
+            List<Team> tempClubs = context.Teams.ToList();
 
-            foreach (ClubTeam team in tempClubs)
+            foreach (var team in tempClubs)
             {
-                if (team.County == county)
-                {
-                    clubs.Add(team);
-                }
+                ClubTeam temp = team as ClubTeam;
+
+                if (temp != null)
+                    if (temp.County == county)
+                        clubs.Add(temp);
             }
 
             return clubs;
