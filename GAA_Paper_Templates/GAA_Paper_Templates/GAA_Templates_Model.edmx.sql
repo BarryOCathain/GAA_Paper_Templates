@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 10/24/2015 13:54:13
+-- Date Created: 10/24/2015 14:41:57
 -- Generated from EDMX file: C:\TortoiseGit\GAA_Paper_Templates\GAA_Paper_Templates\GAA_Paper_Templates\GAA_Templates_Model.edmx
 -- --------------------------------------------------
 
@@ -137,7 +137,7 @@ CREATE TABLE [dbo].[Counties] (
     [ID] int IDENTITY(1,1) NOT NULL,
     [Name] nvarchar(max)  NOT NULL,
     [Province] nvarchar(max)  NOT NULL,
-    [CountyTeams_ID] int  NOT NULL
+    [CountyTeam_ID] int  NOT NULL
 );
 GO
 
@@ -293,10 +293,10 @@ GO
 -- Creating all FOREIGN KEY constraints
 -- --------------------------------------------------
 
--- Creating foreign key on [CountyTeams_ID] in table 'Counties'
+-- Creating foreign key on [CountyTeam_ID] in table 'Counties'
 ALTER TABLE [dbo].[Counties]
 ADD CONSTRAINT [FK_CountyCountyTeam]
-    FOREIGN KEY ([CountyTeams_ID])
+    FOREIGN KEY ([CountyTeam_ID])
     REFERENCES [dbo].[Teams_CountyTeam]
         ([ID])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
@@ -305,7 +305,7 @@ GO
 -- Creating non-clustered index for FOREIGN KEY 'FK_CountyCountyTeam'
 CREATE INDEX [IX_FK_CountyCountyTeam]
 ON [dbo].[Counties]
-    ([CountyTeams_ID]);
+    ([CountyTeam_ID]);
 GO
 
 -- Creating foreign key on [County_ID] in table 'Teams_ClubTeam'

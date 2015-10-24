@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace GAA_Paper_Templates
+namespace GAA_Paper_Templates.Interfaces
 {
-    interface ICompetitionMatchTypeView
+    public interface ICompetitionMatchTypeView
     {
         CompetitionMatchType CreateCompetitionMatchType(string name);
         CompetitionMatchType DeleteCompetitionMatchType(CompetitionMatchType matchType);

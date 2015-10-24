@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace GAA_Paper_Templates
+namespace GAA_Paper_Templates.Interfaces
 {
-    interface ICompetitionView
+    public interface ICompetitionView
     {
         Competition CreateCompetition(string name, DateTime startDate, DateTime endDate);
         Competition DeleteCompetition(Competition comp);

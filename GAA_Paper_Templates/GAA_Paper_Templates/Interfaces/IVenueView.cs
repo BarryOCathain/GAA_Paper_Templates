@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace GAA_Paper_Templates
+namespace GAA_Paper_Templates.Interfaces
 {
-    interface IVenueView
+    public interface IVenueView
     {
         Venue CreateVenue(string name, string location, County county);
         Venue DeleteVenue(Venue venue);

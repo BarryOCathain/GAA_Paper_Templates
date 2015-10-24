@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using GAA_Paper_Templates.Interfaces;
+using System;
 
 namespace GAA_Paper_Templates.Views
 {
-    class CompetitionMatchTypeView : ICompetitionMatchTypeView
+    public class CompetitionMatchTypeView : ICompetitionMatchTypeView, IDisposable
     {
         GAA_Templates_ModelContainer context;
+        private bool disposed = false;
         public CompetitionMatchTypeView(GAA_Templates_ModelContainer _context)
         {
             context = _context;
@@ -77,6 +77,24 @@ namespace GAA_Paper_Templates.Views
                 .Where(c => c.Competitions == comp)
                 .Distinct()
                 .ToList();
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposed)
+            {
+                if (disposing)
+                {
+
+                }
+            }
+
+            disposed = true;
         }
     }
 }

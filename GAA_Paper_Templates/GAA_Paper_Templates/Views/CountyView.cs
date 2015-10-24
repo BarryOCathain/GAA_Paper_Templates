@@ -1,15 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using GAA_Paper_Templates.Common;
+using GAA_Paper_Templates.Interfaces;
+using System;
 
 namespace GAA_Paper_Templates.Views
 {
-    class CountyView : ICountyView
+    public class CountyView : ICountyView, IDisposable
     {
         GAA_Templates_ModelContainer context;
+        private bool disposed = false;
         public CountyView(GAA_Templates_ModelContainer _context)
         {
             context = _context;
@@ -17,9 +17,13 @@ namespace GAA_Paper_Templates.Views
 
         public County CreateCounty(string name, Enums.Provinces province)
         {
+            CountyTeam ct = new CountyTeam();
+            ct.Name = name;
+
             County c = new County();
             c.Name = name;
             c.Province = province.ToString();
+            c.CountyTeam = ct;
 
             context.Counties.Add(c);
             context.SaveChanges();
@@ -77,6 +81,24 @@ namespace GAA_Paper_Templates.Views
             return context.Counties
                 .Where(c => c.Province == province.ToString())
                 .ToList();
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposed)
+            {
+                if (disposing)
+                {
+
+                }
+            }
+
+            disposed = true;
         }
     }
 }

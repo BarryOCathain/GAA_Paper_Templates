@@ -1,39 +1,48 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using GAA_Paper_Templates.Common;
+using GAA_Paper_Templates.Interfaces;
+using System;
 
 namespace GAA_Paper_Templates.Views
 {
-    class TeamView : ITeamView
+    public class TeamView : ITeamView, IDisposable
     {
         GAA_Templates_ModelContainer context;
+        private bool disposed = false;
         public TeamView(GAA_Templates_ModelContainer _context)
         {
             context = _context;
         }
 
-        public Team CreateTeam(Enums.Classification classification, string name)
+        public Team CreateTeam(Enums.Classification classification, string name, string county)
         {
-            Team t;
+            County cty = context.Counties
+                .Include("CountyTeam")
+                .Where(c => c.Name == county)
+                .FirstOrDefault();
 
             if (classification == Enums.Classification.Club)
             {
-                t = new ClubTeam();
+                ClubTeam t = new ClubTeam();
+                t.Name = name;
+                t.County = cty;
+
+                context.Teams.Add(t);
+                context.SaveChanges();
+
+                return t;
             }
             else
             {
-                t = new CountyTeam();
+                CountyTeam t = new CountyTeam();
+                t.Name = name;
+
+                context.Teams.Add(t);
+                context.SaveChanges();
+
+                return t;
             }
-
-            t.Name = name;
-
-            context.Teams.Add(t);
-            context.SaveChanges();
-
-            return t;
         }
 
         public Team UpdateTeam(Team team, string name)
@@ -104,6 +113,24 @@ namespace GAA_Paper_Templates.Views
                 .ToList();
 
             return teams;
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposed)
+            {
+                if (disposing)
+                {
+
+                }
+            }
+
+            disposed = true;
         }
     }
 }

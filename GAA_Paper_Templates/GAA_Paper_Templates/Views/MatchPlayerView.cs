@@ -1,14 +1,14 @@
-﻿using System;
+﻿using GAA_Paper_Templates.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System;
 
 namespace GAA_Paper_Templates.Views
 {
-    class MatchPlayerView : IMatchPlayerView
+    class MatchPlayerView : IMatchPlayerView, IDisposable
     {
         GAA_Templates_ModelContainer context;
+        private bool disposed = false;
         public MatchPlayerView(GAA_Templates_ModelContainer _context)
         {
             context = _context;
@@ -116,6 +116,24 @@ namespace GAA_Paper_Templates.Views
 
                 context.SaveChanges(); 
             }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposed)
+            {
+                if (disposing)
+                {
+
+                }
+            }
+
+            disposed = true;
         }
     }
 }

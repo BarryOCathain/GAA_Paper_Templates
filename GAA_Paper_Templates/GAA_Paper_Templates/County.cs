@@ -26,7 +26,7 @@ namespace GAA_Paper_Templates
         public string Name { get; set; }
         public string Province { get; set; }
     
-        public virtual CountyTeam CountyTeams { get; set; }
+        public virtual CountyTeam CountyTeam { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ClubTeam> ClubTeams { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

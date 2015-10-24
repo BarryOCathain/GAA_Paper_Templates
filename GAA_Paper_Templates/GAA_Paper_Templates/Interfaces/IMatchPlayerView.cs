@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace GAA_Paper_Templates
+namespace GAA_Paper_Templates.Interfaces
 {
-    interface IMatchPlayerView
+    public interface IMatchPlayerView
     {
         MatchPlayer CreateMatchPlayer(Player pl, Match match, int playerNumber);
         MatchPlayer DeleteMatchPlayer(MatchPlayer pl);

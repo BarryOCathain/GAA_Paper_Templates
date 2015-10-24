@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace GAA_Paper_Templates
+namespace GAA_Paper_Templates.Interfaces
 {
-    interface IMatchView
+    public interface IMatchView
     {
         Match CreateMatch(DateTime matchDate, TimeSpan time, Venue venue, CompetitionMatchType matchType, Competition competition, Team homeTeam, Team awayTeam);
         Match DeleteMatch(DateTime MatchDate, TimeSpan time, Venue venue);

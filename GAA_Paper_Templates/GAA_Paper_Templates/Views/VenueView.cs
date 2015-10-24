@@ -1,14 +1,14 @@
-﻿using System;
+﻿using GAA_Paper_Templates.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System;
 
 namespace GAA_Paper_Templates.Views
 {
-    class VenueView : IVenueView
+    public class VenueView : IVenueView, IDisposable
     {
         GAA_Templates_ModelContainer context;
+        private bool disposed = false;
         public VenueView(GAA_Templates_ModelContainer _context)
         {
             context = _context;
@@ -86,6 +86,24 @@ namespace GAA_Paper_Templates.Views
             return context.Venues
                 .Where(v => v.Location == location)
                 .ToList();
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposed)
+            {
+                if (disposing)
+                {
+
+                }
+            }
+
+            disposed = true;
         }
     }
 }

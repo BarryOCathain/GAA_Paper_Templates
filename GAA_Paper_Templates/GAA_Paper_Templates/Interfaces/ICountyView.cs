@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using GAA_Paper_Templates.Common;
 
-namespace GAA_Paper_Templates
+namespace GAA_Paper_Templates.Interfaces
 {
-    interface ICountyView
+    public interface ICountyView
     {
         County CreateCounty(string name, Enums.Provinces province);
         County DeleteCounty(County county);
