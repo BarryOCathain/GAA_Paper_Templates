@@ -16,7 +16,7 @@ namespace Client_Layer
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new PlayerWindow());
+            Application.Run(new PlayerWindow(true));
         }
     }
 }

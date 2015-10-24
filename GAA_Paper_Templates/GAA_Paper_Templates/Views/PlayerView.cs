@@ -33,6 +33,8 @@ namespace GAA_Paper_Templates.Views
         public Player UpdatePlayer(string firstName, string lastName, bool isObsolete, CountyTeam countyTeam, ClubTeam clubTeam)
         {
             Player pl = context.Players
+                .Include("Countyteam")
+                .Include("ClubTeam")
                 .Where(p => p.FirstName == firstName && p.LastName == lastName)
                 .FirstOrDefault();
 

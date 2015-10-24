@@ -65,6 +65,32 @@ namespace GAA_Paper_Templates.Views
             }
         }
 
+        public ClubTeam GetClub(string name, County county)
+        {
+            ClubTeam output = null;
+
+            List<Team> teams = context.Teams
+                .Where(t => t.Name == name)
+                .ToList();
+
+            foreach (ClubTeam team in teams)
+            {
+                if (team.Name == name && team.County == county)
+                {
+                    output = team;
+                }
+            }
+
+            return output;
+        }
+
+        public CountyTeam GetCountyTeam(string name)
+        {
+            return (CountyTeam)context.Teams
+                .Where(t => t.Name == name)
+                .FirstOrDefault();
+        }
+
         public Team DeleteTeam(Team team)
         {
             Team t = team;

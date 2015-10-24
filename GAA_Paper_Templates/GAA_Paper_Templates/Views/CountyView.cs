@@ -71,6 +71,13 @@ namespace GAA_Paper_Templates.Views
             }
         }
 
+        public County GetCounty(string name)
+        {
+            return context.Counties
+                .Where(c => c.Name == name)
+                .FirstOrDefault();
+        }
+
         public List<County> GetAllCounties()
         {
             return context.Counties.ToList();

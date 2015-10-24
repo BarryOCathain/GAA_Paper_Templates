@@ -7,6 +7,7 @@ namespace GAA_Paper_Templates.Interfaces
     {
         County CreateCounty(string name, Enums.Provinces province);
         County DeleteCounty(County county);
+        County GetCounty(string name);
         List<County> GetAllCounties();
         List<County> GetCountiesByProvince(Enums.Provinces province);
         County UpdateCounty(County county, string name, Enums.Provinces province);

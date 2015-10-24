@@ -17,17 +17,27 @@ namespace Client_Layer
     public partial class PlayerWindow : Form, IPlayerView, ICountyView, ITeamView
     {
         GAA_Templates_ModelContainer context;
-        public PlayerWindow()
+        TeamView teamViewContext;
+        CountyView countyViewContext;
+        PlayerView playerViewContext;
+        private bool update;
+        public PlayerWindow(bool _update = false)
         {
             InitializeComponent();
+
+            update = _update;
             context = new GAA_Templates_ModelContainer();
+            teamViewContext = new TeamView(context);
+            countyViewContext = new CountyView(context);
+            playerViewContext = new PlayerView(context);
             loadTestData();
+            addEventHandlers();
         }
 
         private void PlayerWindow_Load(object sender, EventArgs e)
         {
             refreshCounties();
-            refreshClubTeams();
+            refreshClubTeams((int)this.countyComboBox.SelectedValue);
         }
 
         private void refreshCounties()
@@ -35,9 +45,9 @@ namespace Client_Layer
             this.countiesTableAdapter.Fill(this.gAA_TemplatesDataSet.Counties);
         }
 
-        private void refreshClubTeams()
+        private void refreshClubTeams(int cty)
         {
-            this.teams_ClubTeamTableAdapter.Fill(this.gAA_TemplatesDataSet.Teams_ClubTeam);
+            this.teams_ClubTeamTableAdapter.FillByCounty(this.gAA_TemplatesDataSet.Teams_ClubTeam, cty);
         }
 
         private void loadTestData()
@@ -47,14 +57,30 @@ namespace Client_Layer
             //CreateTeam(Enums.Classification.Club, "Austin Stacks", "Kerry");          
         }
 
+
+
+
+
+        private void closeButton_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        #region PlayerView Methods
         public Player CreatePlayer(string firstName, string lastName, bool isObsolete, CountyTeam countyTeam, ClubTeam clubTeam)
         {
-            throw new NotImplementedException();
+            using (playerViewContext)
+            {
+                return playerViewContext.CreatePlayer(firstName, lastName, isObsolete, countyTeam, clubTeam);
+            }
         }
 
         public Player UpdatePlayer(string firstName, string lastName, bool isObsolete, CountyTeam countyTeam, ClubTeam clubTeam)
         {
-            throw new NotImplementedException();
+            using (playerViewContext)
+            {
+                return playerViewContext.UpdatePlayer(firstName, lastName, isObsolete, countyTeam, clubTeam);
+            }
         }
 
         public Player GetPlayerByFirstOrLastName(string firstName, string lastName)
@@ -90,20 +116,29 @@ namespace Client_Layer
         public List<Player> GetPlayersByLastName(string lastName)
         {
             throw new NotImplementedException();
-        }
+        } 
+        #endregion
 
-        #region ICountyView implemented for test purposes
+        #region CountyView Methods
         public County CreateCounty(string name, Enums.Provinces province)
         {
-            using (CountyView _context = new CountyView(context))
+            using (countyViewContext)
             {
-                return _context.CreateCounty(name, province);
+                return countyViewContext.CreateCounty(name, province);
             }
         }
 
         public County DeleteCounty(County county)
         {
             throw new NotImplementedException();
+        }
+
+        public County GetCounty(string name)
+        {
+            using (countyViewContext)
+            {
+                return countyViewContext.GetCounty(name);
+            }
         }
 
         public List<County> GetAllCounties()
@@ -122,23 +157,34 @@ namespace Client_Layer
         }
         #endregion
 
-        private void closeButton_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
-        #region Team Region for test purposes
+        #region TeamView Methods
         public Team CreateTeam(Enums.Classification classification, string name, string county)
         {
-            using (TeamView _context = new TeamView(context))
+            using (teamViewContext)
             {
-                return _context.CreateTeam(classification, name, county);
+                return teamViewContext.CreateTeam(classification, name, county);
             }
         }
 
         public Team DeleteTeam(Team team)
         {
             throw new NotImplementedException();
+        }
+
+        public ClubTeam GetClub(string name, County county)
+        {
+            using (teamViewContext)
+            {
+                return teamViewContext.GetClub(name, county);
+            }
+        }
+
+        public CountyTeam GetCountyTeam(string name)
+        {
+            using (teamViewContext)
+            {
+                return teamViewContext.GetCountyTeam(name);
+            }
         }
 
         public List<Team> GetAllTeams(Enums.Classification classification)
@@ -154,7 +200,128 @@ namespace Client_Layer
         public Team UpdateTeam(Team team, string name)
         {
             throw new NotImplementedException();
+        }
+        #endregion
+
+        #region Event Handlers and Helpers
+        private void addEventHandlers()
+        {
+            foreach (Control ctrl in this.Controls)
+            {
+                if (ctrl.GetType() == typeof(TextBox) || ctrl.GetType() == typeof(ComboBox))
+                {
+                    addHandlersToControl(ctrl);
+                }
+            }
+        }
+
+        private void addHandlersToControl(Control ctrl)
+        {
+            if (ctrl.GetType() == typeof(TextBox))
+                ctrl.TextChanged += new EventHandler(checkTextBoxIsNotEmpty);
+            else
+                ctrl.TextChanged += new EventHandler(checkComboBoxIsNotEmpty);
+
+            ctrl.KeyPress += new KeyPressEventHandler(enterKeyPressed);
+        }
+
+        private void checkTextBoxIsNotEmpty(object sender, EventArgs e)
+        {
+            TextBox temp = (TextBox)sender;
+
+            if (string.IsNullOrEmpty(temp.Text))
+                temp.BackColor = Color.DarkRed;
+            else
+                temp.BackColor = Color.Empty;
+        }
+
+        private void checkComboBoxIsNotEmpty(object sender, EventArgs e)
+        {
+            ComboBox temp = (ComboBox)sender;
+
+            if (string.IsNullOrEmpty(temp.Text))
+                temp.BackColor = Color.DarkRed;
+            else
+                temp.BackColor = Color.Empty;
+        }
+
+
+        private void enterKeyPressed(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Enter)
+                saveButton_Click(this, null);
         } 
         #endregion
+
+        private void newCountyButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void newClubButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void saveButton_Click(object sender, EventArgs e)
+        {
+            if (checkEntriesAreValid())
+            {
+                CountyTeam ctyTm;
+                ClubTeam club;
+
+                if (this.countyPlayerCheckBox.Checked)
+                    ctyTm = GetCountyTeam(this.countyComboBox.Text);
+                else
+                    ctyTm = null;
+
+                using (GAA_Templates_ModelContainer _context = new GAA_Templates_ModelContainer())
+                {
+                    club = GetClub(this.clubComboBox.Text, GetCounty(this.countyComboBox.Text));                       
+                }
+
+                if (update)
+                {
+                    UpdatePlayer(this.firstNameTextBox.Text, this.lastNameTextBox.Text, this.obsoleteCheckBox.Checked,
+                        ctyTm, club);
+                }
+                else
+                {
+                    CreatePlayer(this.firstNameTextBox.Text, this.lastNameTextBox.Text, this.obsoleteCheckBox.Checked,
+                        ctyTm, club);
+                }
+
+                this.DialogResult = DialogResult.OK;
+
+                this.Close();
+            }
+        }
+
+        private bool checkEntriesAreValid()
+        {
+            bool isValid = true;
+
+            foreach (Control ctrl in this.Controls)
+             {
+                if (ctrl.GetType() == typeof(TextBox))
+                    if (string.IsNullOrEmpty(ctrl.Text))
+                        isValid = false;
+
+                if (ctrl.GetType() == typeof(ComboBox))
+                {
+                    ComboBox temp = (ComboBox)ctrl;
+
+                    if (temp.SelectedIndex == -1 || string.IsNullOrEmpty(temp.Text))
+                        isValid = false;
+                }
+            }
+
+            if (!isValid)
+            {
+                MessageBox.Show("Ensure that you have entered all the required details."); 
+            }
+
+            return isValid;
+        }
     }
 }

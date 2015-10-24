@@ -10,5 +10,7 @@ namespace GAA_Paper_Templates.Interfaces
         List<Team> GetAllTeams(Enums.Classification classification);
         List<ClubTeam> GetClubsByCounty(County county);
         Team UpdateTeam(Team team, string name);
+        ClubTeam GetClub(string name, County county);
+        CountyTeam GetCountyTeam(string name);
     }
 }
