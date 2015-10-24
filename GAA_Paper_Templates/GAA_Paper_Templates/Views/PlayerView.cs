@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GAA_Paper_Templates.Views
 {
-    class PlayerView
+    class PlayerView : IPlayerView
     {
         private GAA_Templates_ModelContainer context;
 

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GAA_Paper_Templates.Views
 {
-    class MatchView
+    class MatchView : IMatchView
     {
         GAA_Templates_ModelContainer context;
         public MatchView(GAA_Templates_ModelContainer _context)

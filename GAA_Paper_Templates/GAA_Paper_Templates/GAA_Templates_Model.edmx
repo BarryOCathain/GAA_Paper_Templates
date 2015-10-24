@@ -482,7 +482,7 @@
           <NavigationProperty Name="HomeTeam" Relationship="GAA_Templates_Model.TeamMatch" FromRole="Match" ToRole="Team" />
           <NavigationProperty Name="AwayTeam" Relationship="GAA_Templates_Model.TeamMatch1" FromRole="Match" ToRole="Team" />
         </EntityType>
-        <EntityType Name="Team">
+        <EntityType Name="Team" Abstract="true">
           <Key>
             <PropertyRef Name="ID" />
           </Key>

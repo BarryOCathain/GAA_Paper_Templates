@@ -90,6 +90,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>GAA_Templates_Model.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Interfaces\IPlayerView.cs" />
     <Compile Include="Match.cs">
       <DependentUpon>GAA_Templates_Model.tt</DependentUpon>
     </Compile>
@@ -106,7 +107,8 @@
     <Compile Include="Venue.cs">
       <DependentUpon>GAA_Templates_Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Views\MatchView.cs" />
+    <Compile Include="Views\IMatchView.cs" />
+    <Compile Include="Interfaces\MatchView.cs" />
     <Compile Include="Views\PlayerView.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -154,9 +156,7 @@
       <DependentUpon>GAA_Templates_Model.edmx</DependentUpon>
     </Content>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Interfaces\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
