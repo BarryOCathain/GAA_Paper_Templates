@@ -15,13 +15,14 @@ namespace GAA_Paper_Templates.Views
             context = _context;
         }
 
-        public Competition CreateCompetition(string name, DateTime startDate, DateTime endDate)
+        public Competition CreateCompetition(string name, DateTime startDate, DateTime endDate, County county)
         {
             Competition c = new Competition();
 
             c.Name = name;
-            c.StartDate = startDate;
-            c.EndDate = endDate;
+            c.StartDate = startDate.Date;
+            c.EndDate = endDate.Date;
+            c.County = county;
 
             context.Competitions.Add(c);
             context.SaveChanges();
@@ -29,7 +30,7 @@ namespace GAA_Paper_Templates.Views
             return c;
         }
 
-        public Competition UpdateCompetition(Competition comp, string name, DateTime startDate, DateTime endDate)
+        public Competition UpdateCompetition(Competition comp, string name, DateTime startDate, DateTime endDate, County county)
         {
             Competition cmp = context.Competitions
                 .Where(c => c == comp)
@@ -38,8 +39,8 @@ namespace GAA_Paper_Templates.Views
             if (cmp != null)
             {
                 cmp.Name = name;
-                cmp.StartDate = startDate;
-                cmp.EndDate = endDate;
+                cmp.StartDate = startDate.Date;
+                cmp.EndDate = endDate.Date;
 
                 context.SaveChanges();
 
@@ -68,6 +69,17 @@ namespace GAA_Paper_Templates.Views
             {
                 return null;
             }
+        }
+
+        public Competition GetCompetitionByNameYearAndCounty(string name, DateTime year, County county)
+        {
+            DateTime start = DateTime.Parse("01/01/" + year.Year);
+            DateTime end = DateTime.Parse("31/12/" + year.Year);
+
+            return context.Competitions
+                .Where(c => c.Name == name && c.StartDate >= start && c.StartDate <= end)
+                .FirstOrDefault();
+                
         }
 
         public List<Competition> GetAllCompetitions()

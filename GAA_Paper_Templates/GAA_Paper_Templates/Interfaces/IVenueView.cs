@@ -6,6 +6,7 @@ namespace GAA_Paper_Templates.Interfaces
     {
         Venue CreateVenue(string name, string location, County county);
         Venue DeleteVenue(Venue venue);
+        Venue GetVenue(string name);
         List<Venue> GetAllVenues();
         List<Venue> GetVenuesByCounty(County county);
         List<Venue> GetVenuesByLocation(string location);

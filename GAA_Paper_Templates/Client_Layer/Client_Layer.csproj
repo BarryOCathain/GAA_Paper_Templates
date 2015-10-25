@@ -55,6 +55,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ClubWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ClubWindow.Designer.cs">
+      <DependentUpon>ClubWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CompetitionWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CompetitionWindow.Designer.cs">
+      <DependentUpon>CompetitionWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="CountyWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -69,6 +81,18 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="VenueWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="VenueWindow.Designer.cs">
+      <DependentUpon>VenueWindow.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="ClubWindow.resx">
+      <DependentUpon>ClubWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CompetitionWindow.resx">
+      <DependentUpon>CompetitionWindow.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="CountyWindow.resx">
       <DependentUpon>CountyWindow.cs</DependentUpon>
     </EmbeddedResource>
@@ -84,6 +108,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="VenueWindow.resx">
+      <DependentUpon>VenueWindow.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

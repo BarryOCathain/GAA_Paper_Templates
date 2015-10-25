@@ -69,6 +69,13 @@ namespace GAA_Paper_Templates.Views
             }
         }
 
+        public Venue GetVenue(string name)
+        {
+            return context.Venues
+                .Where(v => v.Name == name)
+                .FirstOrDefault();
+        }
+
         public List<Venue> GetAllVenues()
         {
             return context.Venues.ToList();

@@ -6,7 +6,7 @@
     <edmx:Diagrams>
       <Diagram DiagramId="7f62718335f849429348873e2c6b392b" Name="Diagram1" >
         <EntityTypeShape EntityType="GAA_Templates_Model.Match" Width="1.875" PointX="7.625" PointY="0.5" />
-        <EntityTypeShape EntityType="GAA_Templates_Model.Team" Width="1.5" PointX="2.25" PointY="2.5" />
+        <EntityTypeShape EntityType="GAA_Templates_Model.Team" Width="1.5" PointX="2.25" PointY="3" />
         <EntityTypeShape EntityType="GAA_Templates_Model.County" Width="1.5" PointX="2.25" PointY="0.5" IsExpanded="true" />
         <EntityTypeShape EntityType="GAA_Templates_Model.CountyTeam" Width="1.5" PointX="4" PointY="3" />
         <EntityTypeShape EntityType="GAA_Templates_Model.ClubTeam" Width="1.5" PointX="0.5" PointY="3" />
@@ -15,7 +15,7 @@
         <AssociationConnector Association="GAA_Templates_Model.CountyCountyTeam" ManuallyRouted="false" >
         </AssociationConnector>
         <AssociationConnector Association="GAA_Templates_Model.ClubTeamCounty" />
-        <EntityTypeShape EntityType="GAA_Templates_Model.Player" Width="1.5" PointX="2.25" PointY="4.375" />
+        <EntityTypeShape EntityType="GAA_Templates_Model.Player" Width="1.5" PointX="2.25" PointY="4.875" />
         <AssociationConnector Association="GAA_Templates_Model.CountyTeamPlayer" />
         <AssociationConnector Association="GAA_Templates_Model.ClubTeamPlayer" />
         <EntityTypeShape EntityType="GAA_Templates_Model.Venue" Width="1.5" PointX="5.625" PointY="0.5" />

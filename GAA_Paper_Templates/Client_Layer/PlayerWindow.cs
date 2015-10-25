@@ -161,7 +161,7 @@ namespace Client_Layer
         #endregion
 
         #region TeamView Methods
-        public Team CreateTeam(Enums.Classification classification, string name, string county)
+        public Team CreateTeam(Enums.Classification classification, string name, County county)
         {
             using (teamViewContext)
             {
@@ -264,15 +264,17 @@ namespace Client_Layer
             using (CountyWindow cw = new CountyWindow())
             {
                 if (cw.ShowDialog() == DialogResult.OK)
-                {
                     refreshComboBoxes();
-                }
             }
         }
 
         private void newClubButton_Click(object sender, EventArgs e)
         {
-
+            using (ClubWindow cw = new ClubWindow())
+            {
+                if (cw.ShowDialog() == DialogResult.OK)
+                    refreshClubTeams();
+            }
         }
 
         private void saveButton_Click(object sender, EventArgs e)

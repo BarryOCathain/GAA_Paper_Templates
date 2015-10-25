@@ -5,7 +5,7 @@ namespace GAA_Paper_Templates.Interfaces
 {
     public interface ITeamView
     {
-        Team CreateTeam(Enums.Classification classification, string name, string county);
+        Team CreateTeam(Enums.Classification classification, string name, County county);
         Team DeleteTeam(Team team);
         List<Team> GetAllTeams(Enums.Classification classification);
         List<ClubTeam> GetClubsByCounty(County county);

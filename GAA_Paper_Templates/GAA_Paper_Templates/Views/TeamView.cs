@@ -15,18 +15,13 @@ namespace GAA_Paper_Templates.Views
             context = _context;
         }
 
-        public Team CreateTeam(Enums.Classification classification, string name, string county)
+        public Team CreateTeam(Enums.Classification classification, string name, County county)
         {
-            County cty = context.Counties
-                .Include("CountyTeam")
-                .Where(c => c.Name == county)
-                .FirstOrDefault();
-
             if (classification == Enums.Classification.Club)
             {
                 ClubTeam t = new ClubTeam();
                 t.Name = name;
-                t.County = cty;
+                t.County = county;
 
                 context.Teams.Add(t);
                 context.SaveChanges();
@@ -148,12 +143,7 @@ namespace GAA_Paper_Templates.Views
         protected virtual void Dispose(bool disposing)
         {
             if (!disposed)
-            {
                 if (disposing)
-                {
-
-                }
-            }
 
             disposed = true;
         }

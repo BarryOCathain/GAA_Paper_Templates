@@ -80,7 +80,7 @@ namespace GAA_Paper_Templates.Views
 
         public List<County> GetAllCounties()
         {
-            return context.Counties.ToList();
+            return context.Counties.OrderBy(c => c.Name).ToList();
         }
 
         public List<County> GetCountiesByProvince(Enums.Provinces province)
@@ -98,12 +98,7 @@ namespace GAA_Paper_Templates.Views
         protected virtual void Dispose(bool disposing)
         {
             if (!disposed)
-            {
                 if (disposing)
-                {
-
-                }
-            }
 
             disposed = true;
         }
