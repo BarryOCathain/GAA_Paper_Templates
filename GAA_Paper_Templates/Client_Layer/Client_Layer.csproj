@@ -73,6 +73,12 @@
     <Compile Include="CountyWindow.Designer.cs">
       <DependentUpon>CountyWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="MatchWIndow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MatchWIndow.Designer.cs">
+      <DependentUpon>MatchWIndow.cs</DependentUpon>
+    </Compile>
     <Compile Include="PlayerWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -95,6 +101,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="CountyWindow.resx">
       <DependentUpon>CountyWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MatchWIndow.resx">
+      <DependentUpon>MatchWIndow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PlayerWindow.resx">
       <DependentUpon>PlayerWindow.cs</DependentUpon>

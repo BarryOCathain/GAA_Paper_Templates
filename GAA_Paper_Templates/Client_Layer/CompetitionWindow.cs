@@ -19,11 +19,20 @@ namespace Client_Layer
         CompetitionView competitionViewContext;
 
         private bool update;
-        public CompetitionWindow(bool _update = false)
+        private Competition competition;
+        public CompetitionWindow(Competition _competition = null)
         {
             InitializeComponent();
 
-            update = _update;
+            competition = _competition;
+
+            if (competition != null)
+            {
+                update = true;
+                loadCompetitionDetails(competition);
+            }
+            else
+                update = false;
 
             context = new GAA_Templates_ModelContainer();
             competitionViewContext = new CompetitionView(context);
@@ -39,6 +48,14 @@ namespace Client_Layer
                 this.countyComboBox.ValueMember = "ID";
                 this.countyComboBox.DisplayMember = "Name";
             }
+        }
+
+        private void loadCompetitionDetails(Competition comp)
+        {
+            this.nameTextBox.Text = comp.Name;
+            this.startDateTimePicker.Value = comp.StartDate;
+            this.endDateTimePicker.Value = comp.EndDate;
+            this.countyComboBox.SelectedItem = comp.County;
         }
 
         #region CompetitionView Methods
@@ -85,14 +102,11 @@ namespace Client_Layer
 
         private void saveButton_Click(object sender, EventArgs e)
         {
-            Competition comp = competitionViewContext.GetCompetitionByNameYearAndCounty(this.nameTextBox.Text,
-                this.startDateTimePicker.Value, (County)this.countyComboBox.SelectedItem);
-
             if (update)
             {
-                if (comp != null)
+                if (competition != null)
                 {
-                    competitionViewContext.UpdateCompetition(comp, this.nameTextBox.Text, this.startDateTimePicker.Value,
+                    competitionViewContext.UpdateCompetition(competition, this.nameTextBox.Text, this.startDateTimePicker.Value,
                         this.endDateTimePicker.Value, (County)this.countyComboBox.SelectedItem);
                     MessageBox.Show("Competition Updated.");
                     this.DialogResult = DialogResult.OK;
@@ -103,7 +117,7 @@ namespace Client_Layer
             }
             else
             {
-                if (comp == null)
+                if (competition == null)
                 {
                     competitionViewContext.CreateCompetition(this.nameTextBox.Text, this.startDateTimePicker.Value,
                         this.endDateTimePicker.Value, (County)this.countyComboBox.SelectedItem);

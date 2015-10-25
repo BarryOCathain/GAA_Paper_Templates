@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using GAA_Paper_Templates;
 
 namespace Client_Layer
 {
@@ -14,9 +15,19 @@ namespace Client_Layer
         [STAThread]
         static void Main()
         {
+            Competition comp;
+
+            using (GAA_Templates_ModelContainer context = new GAA_Templates_ModelContainer())
+            {
+                comp = context.Competitions
+                    .Include("County")
+                    .Where(c => c.Name == "Senior Championship")
+                    .FirstOrDefault();
+            }
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new CompetitionWindow());
+            Application.Run(new CompetitionWindow(comp));
         }
     }
 }

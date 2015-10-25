@@ -33,7 +33,8 @@ namespace GAA_Paper_Templates.Views
         public Competition UpdateCompetition(Competition comp, string name, DateTime startDate, DateTime endDate, County county)
         {
             Competition cmp = context.Competitions
-                .Where(c => c == comp)
+                .Include("County")
+                .Where(c => c.Name == comp.Name && c.StartDate == comp.StartDate && c.EndDate == comp.EndDate)
                 .FirstOrDefault();
 
             if (cmp != null)
@@ -41,6 +42,7 @@ namespace GAA_Paper_Templates.Views
                 cmp.Name = name;
                 cmp.StartDate = startDate.Date;
                 cmp.EndDate = endDate.Date;
+                cmp.County = county;
 
                 context.SaveChanges();
 
