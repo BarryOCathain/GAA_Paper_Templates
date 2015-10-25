@@ -27,7 +27,7 @@ namespace Client_Layer
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new CompetitionWindow(comp));
+            Application.Run(new MatchWIndow());
         }
     }
 }
